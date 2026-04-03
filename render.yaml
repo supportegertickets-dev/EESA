@@ -1,7 +1,7 @@
 services:
   - type: web
     name: eesa-api
-    env: node
+    runtime: node
     plan: free
     buildCommand: npm install
     startCommand: node backend/server.js

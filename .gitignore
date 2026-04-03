@@ -1,5 +1,9 @@
 node_modules/
 eesa.db
+eesa.db-shm
+eesa.db-wal
 uploads/*
 !uploads/.gitkeep
 .env
+dist/
+frontend/dist/
