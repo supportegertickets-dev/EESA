@@ -2,13 +2,14 @@
   "name": "eesa-portal",
   "version": "2.0.0",
   "description": "Egerton Engineering Student Association Portal",
-  "main": "server.js",
+  "main": "backend/server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "concurrently \"node server.js\" \"vite --config frontend/vite.config.js\"",
+    "start": "node backend/server.js",
+    "build": "npm run client:build",
+    "dev": "concurrently \"node backend/server.js\" \"vite --config frontend/vite.config.js\"",
     "client:dev": "vite --config frontend/vite.config.js",
     "client:build": "vite build --config frontend/vite.config.js",
-    "seed": "node seed.js"
+    "seed": "node backend/seed.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

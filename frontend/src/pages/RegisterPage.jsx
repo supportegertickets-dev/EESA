@@ -64,6 +64,9 @@ export default function RegisterPage() {
           <h2>Member Registration</h2>
           <p>Join the Egerton Engineering Student Association</p>
         </div>
+        <p style={{ marginBottom: 16, textAlign: 'center', color: 'var(--gray-600)', fontSize: '.88rem' }}>
+          After registration, you can activate your membership from the portal using M-Pesa or manual payment confirmation.
+        </p>
 
         {success && <div className="alert alert-success" style={{ marginBottom: 16, padding: '10px 14px', background: 'var(--success-bg, #d4edda)', color: 'var(--success, #155724)', borderRadius: 8, textAlign: 'center', fontSize: '.9rem' }}>{success}</div>}
         {error && <div className="form-error" style={{ marginBottom: 16, textAlign: 'center' }}>{error}</div>}

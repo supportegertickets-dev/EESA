@@ -1,13 +1,14 @@
 /**
  * Email Notification Service
- * Uses Nodemailer for sending emails (Gmail SMTP)
+ * Uses Nodemailer with Brevo or any SMTP relay.
  */
 const nodemailer = require('nodemailer');
 
+const smtpPort = Number(process.env.SMTP_PORT) || 587;
 const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST || 'smtp.gmail.com',
-  port: Number(process.env.SMTP_PORT) || 587,
-  secure: false,
+  host: process.env.SMTP_HOST || 'smtp-relay.brevo.com',
+  port: smtpPort,
+  secure: smtpPort === 465,
   auth: {
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASS
@@ -21,7 +22,8 @@ const transporter = nodemailer.createTransport({
  * @param {string} html - HTML body
  */
 async function sendEmail(to, subject, html) {
-  if (!process.env.SMTP_USER || process.env.SMTP_USER === 'your_email@gmail.com') {
+  const smtpUser = process.env.SMTP_USER || '';
+  if (!smtpUser || smtpUser.includes('your_') || !process.env.SMTP_PASS || process.env.SMTP_PASS.includes('your_')) {
     console.log('[Email] SMTP not configured — skipping email to:', to, 'Subject:', subject);
     return null;
   }

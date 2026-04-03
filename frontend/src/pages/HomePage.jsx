@@ -61,9 +61,9 @@ export default function HomePage() {
       <section className="hero" id="home">
         <div className="hero-bg"></div><div className="hero-overlay"></div>
         <div className="container hero-content">
-          <div className="hero-badge"><i className="fas fa-code"></i> BUILD BY EESA TEAM</div>
+          <div className="hero-badge"><i className="fas fa-shield-alt"></i> Official EESA Student Portal</div>
           <h1 className="hero-title">EESA Digital<br /><span className="text-accent">Experience</span></h1>
-          <p className="hero-subtitle">A focused platform for EESA membership, payments, events, announcements, elections, and projects.</p>
+          <p className="hero-subtitle">A focused portal for membership, M-Pesa payments, events, announcements, elections, resources, and projects.</p>
           <div className="hero-actions">
             <Link to="/register" className="btn btn-accent btn-lg"><i className="fas fa-user-plus"></i> Register</Link>
             <Link to="/login" className="btn btn-outline-light btn-lg"><i className="fas fa-sign-in-alt"></i> Member Login</Link>
@@ -153,6 +153,9 @@ export default function HomePage() {
             <Link to="/register" className="btn btn-accent btn-lg"><i className="fas fa-user-plus"></i> Create Account</Link>
             <Link to="/login" className="btn btn-outline-light btn-lg"><i className="fas fa-sign-in-alt"></i> Sign In</Link>
           </div>
+          <p style={{ marginTop: 12, textAlign: 'center', color: 'rgba(255,255,255,0.85)', fontSize: '.9rem' }}>
+            Admin, lecturer, and sponsor access is available from the login page tabs.
+          </p>
         </div>
       </section>
 

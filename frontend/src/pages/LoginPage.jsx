@@ -85,12 +85,12 @@ export default function LoginPage() {
         <div className="login-header">
           <img src="/images/eesa-logo.svg" alt="EESA" className="login-logo" />
           <h2>EESA Portal</h2>
-          <p>Sign in to your account</p>
+          <p>Choose your portal access and sign in securely</p>
         </div>
 
         <div className="login-tabs">
           {roles.map(r => (
-            <button key={r.key} className={`login-tab ${activeRole === r.key ? 'active' : ''}`} onClick={() => { setActiveRole(r.key); setError(''); }}>
+            <button key={r.key} className={`login-tab ${activeRole === r.key ? 'active' : ''}`} onClick={() => { setActiveRole(r.key); setError(''); setShowRegister(false); setRegMsg(''); }}>
               {r.label}
             </button>
           ))}
@@ -148,6 +148,9 @@ export default function LoginPage() {
         )}
 
         {error && <div className="form-error" style={{ marginTop: 10, textAlign: 'center' }}>{error}</div>}
+        <p style={{ marginTop: 14, textAlign: 'center', fontSize: '.82rem', color: 'var(--gray-500)' }}>
+          Need help accessing the portal? Contact <a href="mailto:eesa@egerton.ac.ke">eesa@egerton.ac.ke</a>.
+        </p>
       </div>
     </div>
   );

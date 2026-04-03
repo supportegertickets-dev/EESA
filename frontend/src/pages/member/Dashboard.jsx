@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { Loading, Empty, Badge, fmt } from '../../components/ui';
-import { useToast } from '../../components/ui';
 
 export default function MemberDashboard() {
   const { user } = useAuth();
