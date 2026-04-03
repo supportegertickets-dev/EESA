@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { Loading, Empty, Badge, fmt } from '../../components/ui';
 
@@ -49,10 +50,10 @@ export default function MemberDashboard() {
       <div className="form-card">
         <h4><i className="fas fa-bolt"></i> Quick Actions</h4>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
-          <a href="/portal/membership" className="btn btn-primary btn-sm"><i className="fas fa-credit-card"></i> Pay Fees</a>
-          <a href="/portal/resources" className="btn btn-accent btn-sm"><i className="fas fa-book"></i> Resources</a>
-          <a href="/portal/elections" className="btn btn-outline btn-sm"><i className="fas fa-vote-yea"></i> Vote</a>
-          <a href="/portal/events" className="btn btn-outline btn-sm"><i className="fas fa-calendar-check"></i> View Events</a>
+          <Link to="/portal/membership" className="btn btn-primary btn-sm"><i className="fas fa-credit-card"></i> Pay Fees</Link>
+          <Link to="/portal/resources" className="btn btn-accent btn-sm"><i className="fas fa-book"></i> Resources</Link>
+          <Link to="/portal/elections" className="btn btn-outline btn-sm"><i className="fas fa-vote-yea"></i> Vote</Link>
+          <Link to="/portal/events" className="btn btn-outline btn-sm"><i className="fas fa-calendar-check"></i> View Events</Link>
         </div>
       </div>
 

@@ -26,6 +26,7 @@ function usePublicData() {
 
 export default function HomePage() {
   const { loading, events, projects, announcements, sponsors } = usePublicData();
+  const [menuOpen, setMenuOpen] = useState(false);
   const up = events.slice(0, 4), fp = projects.slice(0, 4), ln = announcements.slice(0, 4);
   const tiers = useMemo(() => ['platinum','gold','silver','bronze','partner'].map(t => ({ tier: t, items: sponsors.filter(s => (s.tier||'').toLowerCase() === t) })).filter(g => g.items.length > 0), [sponsors]);
 
@@ -47,8 +48,11 @@ export default function HomePage() {
             <img src="/images/eesa-logo.svg" alt="EESA" className="nav-logo" />
             <div><span className="brand-title">EESA</span><span className="brand-subtitle">Egerton Engineering Students</span></div>
           </Link>
-          <div className="nav-links open">
-            <a href="#projects">Projects</a><a href="#news">News</a><a href="#sponsors">Sponsors</a><a href="#contact">Contact</a>
+          <button className="nav-toggle" onClick={() => setMenuOpen(o => !o)} aria-label="Toggle menu">
+            <i className={menuOpen ? 'fas fa-times' : 'fas fa-bars'}></i>
+          </button>
+          <div className={`nav-links${menuOpen ? ' open' : ''}`}>
+            <a href="#projects" onClick={() => setMenuOpen(false)}>Projects</a><a href="#news" onClick={() => setMenuOpen(false)}>News</a><a href="#sponsors" onClick={() => setMenuOpen(false)}>Sponsors</a><a href="#contact" onClick={() => setMenuOpen(false)}>Contact</a>
           </div>
           <div className="react-navbar-actions">
             <Link to="/register" className="btn btn-primary">Join EESA</Link>
