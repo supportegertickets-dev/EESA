@@ -8,7 +8,7 @@ module.exports = defineConfig({
   root: __dirname,
   envDir: path.resolve(__dirname, '..'),
   plugins: [react()],
-  publicDir: path.resolve(__dirname, '..', 'public'),
+  publicDir: path.resolve(__dirname, 'public'),
   server: {
     port: 5173,
     proxy: {

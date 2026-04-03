@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EESA Lecturer Portal</title>
+  <link rel="icon" type="image/svg+xml" href="/images/eesa-logo.svg">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="portal-page">
+
+<!-- Sidebar -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-brand"><img src="/images/eesa-logo.svg" alt="EESA" class="sidebar-logo"><span>Lecturer Portal</span></div>
+    <button class="sidebar-close" onclick="toggleSidebar()"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="sidebar-user" id="sidebarUser">
+    <div class="user-avatar"><i class="fas fa-user-circle"></i></div>
+    <div class="user-info">
+      <span class="user-name" id="userName">Lecturer</span>
+      <span class="user-badge badge-success" id="userBadge">Active</span>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <a href="#" class="nav-item active" data-section="dashboard" onclick="showSection('dashboard')">
+      <i class="fas fa-tachometer-alt"></i><span>Dashboard</span>
+    </a>
+    <a href="#" class="nav-item" data-section="units" onclick="showSection('units')">
+      <i class="fas fa-book"></i><span>My Units</span>
+    </a>
+    <a href="#" class="nav-item" data-section="attendance" onclick="showSection('attendance')">
+      <i class="fas fa-clipboard-check"></i><span>Attendance</span>
+    </a>
+    <a href="#" class="nav-item" data-section="assignments" onclick="showSection('assignments')">
+      <i class="fas fa-tasks"></i><span>Assignments</span>
+    </a>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="/" class="nav-item"><i class="fas fa-globe"></i><span>Main Website</span></a>
+    <a href="#" class="nav-item" onclick="logout()"><i class="fas fa-sign-out-alt"></i><span>Sign Out</span></a>
+  </div>
+</aside>
+
+<!-- Main Content -->
+<main class="main-content" id="mainContent">
+  <header class="topbar">
+    <button class="menu-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+    <h2 class="page-title" id="pageTitle">Dashboard</h2>
+    <div class="topbar-actions"><span class="topbar-greeting" id="topbarGreeting">Welcome!</span></div>
+  </header>
+
+  <!-- LOGIN (shown when not authenticated) -->
+  <section class="content-section active" id="sec-login">
+    <div style="max-width:440px;margin:60px auto;">
+      <div class="form-card">
+        <h3 style="text-align:center;color:var(--primary);margin-bottom:6px;"><i class="fas fa-chalkboard-teacher"></i> Lecturer Login</h3>
+        <p style="text-align:center;color:var(--gray-500);font-size:.88rem;margin-bottom:20px;">Access your units, attendance, and assignments</p>
+        <form onsubmit="lecturerLogin(event)">
+          <div class="form-group"><label>Email</label><input type="email" id="loginEmail" required></div>
+          <div class="form-group"><label>Password</label><input type="password" id="loginPassword" required></div>
+          <div class="form-msg" id="loginMsg"></div>
+          <button type="submit" class="btn btn-primary" style="width:100%;"><i class="fas fa-sign-in-alt"></i> Sign In</button>
+        </form>
+        <hr style="margin:18px 0;">
+        <p style="text-align:center;font-size:.85rem;color:var(--gray-500);">Don't have an account?</p>
+        <button class="btn btn-outline" style="width:100%;margin-top:6px;" onclick="toggleRegister()"><i class="fas fa-user-plus"></i> Register</button>
+        <div id="registerForm" style="display:none;margin-top:16px;">
+          <form onsubmit="lecturerRegister(event)">
+            <div class="form-group"><label>Full Name</label><input type="text" id="regName" required></div>
+            <div class="form-group"><label>Staff ID</label><input type="text" id="regStaffId" required></div>
+            <div class="form-group"><label>Email</label><input type="email" id="regEmail" required></div>
+            <div class="form-group"><label>Phone</label><input type="tel" id="regPhone"></div>
+            <div class="form-group"><label>Department</label>
+              <select id="regDept" required>
+                <option value="">Select...</option>
+                <option>Electrical & Electronic Engineering</option>
+                <option>Mechanical Engineering</option>
+                <option>Civil Engineering</option>
+                <option>Agricultural Engineering</option>
+                <option>Industrial & Energy Engineering</option>
+              </select>
+            </div>
+            <div class="form-group"><label>Title</label>
+              <select id="regTitle">
+                <option value="Mr.">Mr.</option>
+                <option value="Mrs.">Mrs.</option>
+                <option value="Ms.">Ms.</option>
+                <option value="Dr.">Dr.</option>
+                <option value="Prof.">Prof.</option>
+                <option value="Eng.">Eng.</option>
+              </select>
+            </div>
+            <div class="form-group"><label>Password</label><input type="password" id="regPassword" required minlength="6"></div>
+            <div class="form-msg" id="regMsg"></div>
+            <button type="submit" class="btn btn-primary" style="width:100%;"><i class="fas fa-user-plus"></i> Register</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DASHBOARD -->
+  <section class="content-section" id="sec-dashboard">
+    <div class="section-intro"><h3>Lecturer Dashboard</h3></div>
+    <div class="dashboard-panels" id="lecDashPanels">
+      <div class="stat-card"><i class="fas fa-book" style="color:var(--primary);font-size:1.5rem;"></i><div class="val" id="dashUnits">0</div><div class="lab">My Units</div></div>
+      <div class="stat-card"><i class="fas fa-users" style="color:var(--accent);font-size:1.5rem;"></i><div class="val" id="dashStudents">0</div><div class="lab">Total Students</div></div>
+      <div class="stat-card"><i class="fas fa-tasks" style="color:var(--success);font-size:1.5rem;"></i><div class="val" id="dashAssignments">0</div><div class="lab">Assignments</div></div>
+    </div>
+  </section>
+
+  <!-- MY UNITS -->
+  <section class="content-section" id="sec-units">
+    <div class="section-intro"><h3>My Units</h3><p>Create and manage the units you teach.</p></div>
+    <div class="form-card" style="margin-bottom:20px;">
+      <h4>Add New Unit</h4>
+      <form onsubmit="createUnit(event)">
+        <div style="display:grid;grid-template-columns:1fr 2fr;gap:10px;">
+          <div class="form-group"><label>Unit Code</label><input type="text" id="uCode" required placeholder="e.g. EEE 2101"></div>
+          <div class="form-group"><label>Unit Name</label><input type="text" id="uName" required placeholder="e.g. Signal Processing"></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+          <div class="form-group"><label>Department</label>
+            <select id="uDept" required>
+              <option value="">Select...</option>
+              <option>Electrical & Electronic Engineering</option>
+              <option>Mechanical Engineering</option>
+              <option>Civil Engineering</option>
+              <option>Agricultural Engineering</option>
+              <option>Industrial & Energy Engineering</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Year of Study</label>
+            <select id="uYear" required><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>
+          </div>
+          <div class="form-group"><label>Semester</label>
+            <select id="uSem" required><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Create Unit</button>
+      </form>
+    </div>
+    <div id="lecUnitsContainer"><div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i></div></div>
+  </section>
+
+  <!-- ATTENDANCE -->
+  <section class="content-section" id="sec-attendance">
+    <div class="section-intro"><h3>Attendance</h3><p>Record class attendance for your units.</p></div>
+    <div class="form-card" style="margin-bottom:20px;">
+      <h4>New Attendance Session</h4>
+      <form onsubmit="recordAttendance(event)">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+          <div class="form-group"><label>Unit</label><select id="attUnit" required onchange="loadUnitStudents()"><option value="">Select Unit...</option></select></div>
+          <div class="form-group"><label>Date</label><input type="date" id="attDate" required></div>
+          <div class="form-group"><label>Topic</label><input type="text" id="attTopic" placeholder="Lecture topic"></div>
+        </div>
+        <div id="attStudentList" style="margin:10px 0;"></div>
+        <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save Attendance</button>
+      </form>
+    </div>
+    <div id="attHistoryContainer"></div>
+  </section>
+
+  <!-- ASSIGNMENTS -->
+  <section class="content-section" id="sec-assignments">
+    <div class="section-intro"><h3>Assignments</h3><p>Create assignments and review submissions.</p></div>
+    <div class="form-card" style="margin-bottom:20px;">
+      <h4>Create Assignment</h4>
+      <form onsubmit="createAssignment(event)">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <div class="form-group"><label>Unit</label><select id="asnUnit" required><option value="">Select Unit...</option></select></div>
+          <div class="form-group"><label>Due Date</label><input type="datetime-local" id="asnDue" required></div>
+        </div>
+        <div class="form-group"><label>Title</label><input type="text" id="asnTitle" required></div>
+        <div class="form-group"><label>Description</label><textarea id="asnDesc" rows="3"></textarea></div>
+        <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Create Assignment</button>
+      </form>
+    </div>
+    <div id="asnContainer"><div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i></div></div>
+  </section>
+
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script src="/js/lecturer.js"></script>
+</body>
+</html>

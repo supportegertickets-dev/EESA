@@ -50,7 +50,8 @@ app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, '..', 'public'), { index: false }));
+const publicPath = path.join(__dirname, '..', 'frontend', 'public');
+app.use(express.static(publicPath, { index: false }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 const candidateReactDistPaths = [
@@ -104,15 +105,15 @@ app.use('/api/notifications', require('./routes/notifications'));
 app.use('/api/upload', require('./routes/upload'));
 
 // Legacy page routes used by the React dashboard loader
-app.get('/legacy/admin*', (req, res) => res.sendFile(path.join(__dirname, '..', 'public', 'admin.html')));
-app.get('/legacy/lecturer*', (req, res) => res.sendFile(path.join(__dirname, '..', 'public', 'lecturer.html')));
-app.get('/legacy/portal*', (req, res) => res.sendFile(path.join(__dirname, '..', 'public', 'portal.html')));
+app.get('/legacy/admin*', (req, res) => res.sendFile(path.join(publicPath, 'admin.html')));
+app.get('/legacy/lecturer*', (req, res) => res.sendFile(path.join(publicPath, 'lecturer.html')));
+app.get('/legacy/portal*', (req, res) => res.sendFile(path.join(publicPath, 'portal.html')));
 
 // React app routes (fallback to legacy HTML if the React build is not available yet)
-app.get('/dashboard*', (req, res) => res.sendFile(hasReactBuild ? reactIndexPath : path.join(__dirname, '..', 'public', 'dashboard.html')));
-app.get('/admin*', (req, res) => res.sendFile(hasReactBuild ? reactIndexPath : path.join(__dirname, '..', 'public', 'admin.html')));
-app.get('/lecturer*', (req, res) => res.sendFile(hasReactBuild ? reactIndexPath : path.join(__dirname, '..', 'public', 'lecturer.html')));
-app.get('/portal*', (req, res) => res.sendFile(hasReactBuild ? reactIndexPath : path.join(__dirname, '..', 'public', 'portal.html')));
-app.get('*', (req, res) => res.sendFile(hasReactBuild ? reactIndexPath : path.join(__dirname, '..', 'public', 'index.html')));
+app.get('/dashboard*', (req, res) => res.sendFile(hasReactBuild ? reactIndexPath : path.join(publicPath, 'dashboard.html')));
+app.get('/admin*', (req, res) => res.sendFile(hasReactBuild ? reactIndexPath : path.join(publicPath, 'admin.html')));
+app.get('/lecturer*', (req, res) => res.sendFile(hasReactBuild ? reactIndexPath : path.join(publicPath, 'lecturer.html')));
+app.get('/portal*', (req, res) => res.sendFile(hasReactBuild ? reactIndexPath : path.join(publicPath, 'portal.html')));
+app.get('*', (req, res) => res.sendFile(hasReactBuild ? reactIndexPath : path.join(publicPath, 'index.html')));
 
 app.listen(PORT, () => console.log(`EESA Portal running at http://localhost:${PORT}`));
