@@ -53,9 +53,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '..', 'public'), { index: false }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-const reactDistPath = path.join(__dirname, '..', 'frontend', 'dist');
-const reactIndexPath = path.join(reactDistPath, 'index.html');
-const hasReactBuild = fs.existsSync(reactIndexPath);
+const candidateReactDistPaths = [
+  path.join(__dirname, '..', 'dist'),
+  path.join(__dirname, '..', 'frontend', 'dist')
+];
+const reactDistPath = candidateReactDistPaths.find(dir => fs.existsSync(path.join(dir, 'index.html')));
+const reactIndexPath = reactDistPath ? path.join(reactDistPath, 'index.html') : null;
+const hasReactBuild = Boolean(reactIndexPath);
 if (hasReactBuild) {
   app.use(express.static(reactDistPath, { index: false }));
 }
