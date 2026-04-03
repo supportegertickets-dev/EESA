@@ -12,6 +12,7 @@
     "seed": "node backend/seed.js"
   },
   "dependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^2.9.0",
     "connect-mongo": "^5.1.0",
@@ -27,11 +28,10 @@
     "qrcode": "^1.5.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.28.1"
+    "react-router-dom": "^6.28.1",
+    "vite": "^6.2.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^4.3.4",
-    "concurrently": "^9.1.2",
-    "vite": "^6.2.0"
+    "concurrently": "^9.1.2"
   }
 }
