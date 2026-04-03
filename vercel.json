@@ -5,7 +5,7 @@
   "outputDirectory": "dist",
   "rewrites": [
     {
-      "source": "/((?!api/|uploads/|assets/|favicon.ico|manifest.json|service-worker.js).*)",
+      "source": "/((?!api/|uploads/|assets/|css/|images/|js/|favicon.ico|manifest.json|service-worker.js).*)",
       "destination": "/index.html"
     }
   ]
