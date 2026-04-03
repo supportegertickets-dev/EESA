@@ -1,7 +1,7 @@
 {
   "version": 2,
   "installCommand": "npm install --include=dev",
-  "buildCommand": "npm run build && cp -r frontend/public/css frontend/public/images frontend/public/js frontend/public/manifest.json frontend/public/service-worker.js dist/ 2>/dev/null; echo 'Build done'; ls dist/",
+  "buildCommand": "npm run build && mkdir -p dist && cp -r frontend/dist/* dist/ && cp -r frontend/public/css frontend/public/images frontend/public/js frontend/public/manifest.json frontend/public/service-worker.js dist/ 2>/dev/null; ls dist/",
   "outputDirectory": "dist",
   "rewrites": [
     {
