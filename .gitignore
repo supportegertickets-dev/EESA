@@ -1,0 +1,5 @@
+node_modules/
+eesa.db
+uploads/*
+!uploads/.gitkeep
+.env

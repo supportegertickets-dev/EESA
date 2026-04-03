@@ -1,0 +1,61 @@
+- generic [ref=e4]:
+  - generic [ref=e5]:
+    - img "EESA" [ref=e6]
+    - heading "Member Registration" [level=2] [ref=e7]
+    - paragraph [ref=e8]: Join the Egerton Engineering Student Association
+  - generic [ref=e9]:
+    - generic [ref=e10]:
+      - generic [ref=e11]:
+        - generic [ref=e12]: Full Name *
+        - textbox "John Kamau" [ref=e13]
+      - generic [ref=e14]:
+        - generic [ref=e15]: Registration Number *
+        - textbox "ENG/2023/001" [ref=e16]
+    - generic [ref=e17]:
+      - generic [ref=e18]:
+        - generic [ref=e19]: Email *
+        - textbox "you@students.egerton.ac.ke" [ref=e20]: test@gmail.com
+      - generic [ref=e21]:
+        - generic [ref=e22]: Phone
+        - textbox "0712345678" [ref=e23]
+    - generic [ref=e24]:
+      - generic [ref=e25]:
+        - generic [ref=e26]: Department *
+        - combobox [ref=e27]:
+          - option "Select department" [selected]
+          - option "Agricultural Engineering"
+          - option "Civil Engineering"
+          - option "Electrical & Electronic Engineering"
+          - option "Mechanical Engineering"
+          - option "Mechatronic Engineering"
+          - option "Industrial & Energy Engineering"
+      - generic [ref=e28]:
+        - generic [ref=e29]: Year of Study *
+        - combobox [ref=e30]:
+          - option "Select year" [selected]
+          - option "Year 1"
+          - option "Year 2"
+          - option "Year 3"
+          - option "Year 4"
+          - option "Year 5"
+    - generic [ref=e31]:
+      - generic [ref=e32]: Gender
+      - combobox [ref=e33]:
+        - option "Prefer not to say" [selected]
+        - option "Male"
+        - option "Female"
+        - option "Other"
+    - generic [ref=e34]:
+      - generic [ref=e35]:
+        - generic [ref=e36]: Password *
+        - textbox "Min 6 characters" [ref=e37]: admin123
+      - generic [ref=e38]:
+        - generic [ref=e39]: Confirm Password *
+        - textbox "Re-enter password" [ref=e40]
+    - button " Create Account" [ref=e41] [cursor=pointer]:
+      - generic [ref=e42]: 
+      - text: Create Account
+    - paragraph [ref=e43]:
+      - text: Already have an account?
+      - link "Sign in" [ref=e44] [cursor=pointer]:
+        - /url: /login

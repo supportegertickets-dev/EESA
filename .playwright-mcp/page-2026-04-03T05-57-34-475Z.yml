@@ -1,0 +1,105 @@
+- generic [ref=e3]:
+  - generic [ref=e5]:
+    - generic [ref=e6]:
+      - generic [ref=e7]:
+        - generic [ref=e8]: 
+        - text: Egerton University, Njoro
+      - generic [ref=e9]:
+        - generic [ref=e10]: 
+        - text: eesa@egerton.ac.ke
+    - link "Unified Portal" [ref=e12] [cursor=pointer]:
+      - /url: /dashboard
+  - banner [ref=e13]:
+    - generic [ref=e14]:
+      - link "EESA EESA Egerton Engineering Students" [ref=e15] [cursor=pointer]:
+        - /url: /
+        - img "EESA" [ref=e16]
+        - generic [ref=e17]:
+          - text: EESA
+          - generic [ref=e18]: Egerton Engineering Students
+      - generic [ref=e19]:
+        - link "Projects" [ref=e20] [cursor=pointer]:
+          - /url: "#projects"
+        - link "News" [ref=e21] [cursor=pointer]:
+          - /url: "#news"
+        - link "Sponsors" [ref=e22] [cursor=pointer]:
+          - /url: "#sponsors"
+        - link "Contact" [ref=e23] [cursor=pointer]:
+          - /url: "#contact"
+      - generic [ref=e24]:
+        - link "Member Portal" [ref=e25] [cursor=pointer]:
+          - /url: /portal
+        - link "Admin" [ref=e26] [cursor=pointer]:
+          - /url: /admin
+  - generic [ref=e29]:
+    - generic [ref=e30]:
+      - generic [ref=e31]: 
+      - text: Powered by React + Node.js
+    - heading "EESA Digital Experience" [level=1] [ref=e32]:
+      - text: EESA Digital
+      - text: Experience
+    - paragraph [ref=e33]: A unified platform for members, admins, lecturers, and sponsors of the Egerton Engineering Student Association.
+    - generic [ref=e34]:
+      - link " Member Portal" [ref=e35] [cursor=pointer]:
+        - /url: /portal
+        - generic [ref=e36]: 
+        - text: Member Portal
+      - link " Admin" [ref=e37] [cursor=pointer]:
+        - /url: /admin
+        - generic [ref=e38]: 
+        - text: Admin
+      - link " Lecturer" [ref=e39] [cursor=pointer]:
+        - /url: /lecturer
+        - generic [ref=e40]: 
+        - text: Lecturer
+    - generic [ref=e41]:
+      - generic [ref=e42]:
+        - generic [ref=e43]: "0"
+        - generic [ref=e44]: Projects
+      - generic [ref=e45]:
+        - generic [ref=e46]: "0"
+        - generic [ref=e47]: Events
+      - generic [ref=e48]:
+        - generic [ref=e49]: "0"
+        - generic [ref=e50]: Updates
+      - generic [ref=e51]:
+        - generic [ref=e52]: "0"
+        - generic [ref=e53]: Sponsors
+  - generic [ref=e55]:
+    - generic [ref=e56]:
+      - generic [ref=e57]: Showcase
+      - heading "Featured Projects" [level=2] [ref=e58]
+    - generic [ref=e60]: Loading...
+  - generic [ref=e62]:
+    - generic [ref=e63]:
+      - generic [ref=e64]: Updates
+      - heading "News & Events" [level=2] [ref=e65]
+    - generic [ref=e66]:
+      - generic [ref=e67]:
+        - heading " Upcoming Events" [level=3] [ref=e68]:
+          - generic [ref=e69]: 
+          - text: Upcoming Events
+        - generic [ref=e71]: No events.
+      - generic [ref=e72]:
+        - heading " Announcements" [level=3] [ref=e73]:
+          - generic [ref=e74]: 
+          - text: Announcements
+        - generic [ref=e76]: No announcements.
+  - generic [ref=e78]:
+    - generic [ref=e79]:
+      - generic [ref=e80]: Partners
+      - heading "Sponsors & Collaborators" [level=2] [ref=e81]
+    - generic [ref=e83]: No sponsors yet.
+  - generic [ref=e85]:
+    - generic [ref=e86]:
+      - generic [ref=e87]: Get Started
+      - heading "Join the EESA Community" [level=2] [ref=e88]
+      - paragraph [ref=e89]: Members, admins, lecturers, and sponsors — one unified platform.
+    - link " Launch Portal" [ref=e91] [cursor=pointer]:
+      - /url: /portal
+      - generic [ref=e92]: 
+      - text: Launch Portal
+  - contentinfo [ref=e93]:
+    - generic [ref=e94]:
+      - paragraph [ref=e95]: © 2026 EESA — Egerton Engineering Student Association
+      - paragraph [ref=e96]: Egerton University • School of Engineering

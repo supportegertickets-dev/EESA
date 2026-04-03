@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EESA - Egerton Engineering Student Association</title>
+  <meta name="description" content="Egerton Engineering Student Association - Empowering future engineers through innovation, collaboration and excellence at Egerton University's School of Engineering.">
+  <link rel="icon" type="image/svg+xml" href="/images/eesa-logo.svg">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+</head>
+<body class="landing-page">
+
+<!-- Top Bar -->
+<div class="top-bar">
+  <div class="container top-bar-inner">
+    <div class="top-bar-left">
+      <span><i class="fas fa-map-marker-alt"></i> Egerton University, Njoro, Kenya</span>
+      <span><i class="fas fa-envelope"></i> eesa@egerton.ac.ke</span>
+    </div>
+    <div class="top-bar-right">
+      <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://x.com/EESA_Egertonuni" target="_blank" rel="noopener noreferrer" title="X (Twitter)"><i class="fab fa-x-twitter"></i></a>
+      <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+    </div>
+  </div>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar" id="navbar">
+  <div class="container nav-container">
+    <a href="/" class="nav-brand">
+      <img src="/images/eesa-logo.svg" alt="EESA Logo" class="brand-logo">
+      <div class="brand-text">
+        <span class="brand-name">EESA</span>
+        <span class="brand-sub">School of Engineering</span>
+      </div>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About SOE</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#events">News &amp; Events</a></li>
+      <li><a href="#sponsors">Partners</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="#" class="btn btn-outline btn-sm" onclick="showAuthModal('login');return false;">Member Login</a>
+      <a href="#" class="btn btn-primary btn-sm" onclick="showAuthModal('register');return false;">Join EESA</a>
+      <a href="/admin" class="btn btn-sm btn-ghost" title="Admin Panel"><i class="fas fa-shield-alt"></i></a>
+    </div>
+    <button class="nav-toggle" onclick="document.getElementById('navLinks').classList.toggle('open')">
+      <i class="fas fa-bars"></i>
+    </button>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="container hero-content">
+    <div class="hero-badge animate-fade-in">
+      <i class="fas fa-university"></i> Egerton University &bull; School of Engineering
+    </div>
+    <h1 class="hero-title animate-fade-in">Engineering<br><span class="text-accent">Tomorrow's</span> World</h1>
+    <p class="hero-subtitle animate-fade-in">The Egerton Engineering Student Association (EESA) unites students, faculty, and industry to build Kenya's next generation of engineering leaders.</p>
+    <div class="hero-actions animate-fade-in">
+      <a href="#" class="btn btn-accent btn-lg" onclick="showAuthModal('register');return false;">
+        <i class="fas fa-rocket"></i> Become a Member
+      </a>
+      <a href="#about" class="btn btn-outline-light btn-lg">
+        <i class="fas fa-play-circle"></i> Explore SOE
+      </a>
+      <a href="#sponsors" class="btn btn-outline-gold btn-lg">
+        <i class="fas fa-handshake"></i> Partner With Us
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="stat-number" id="statMembers">0</span>
+        <span class="stat-label">Active Members</span>
+      </div>
+      <div class="hero-stat">
+        <span class="stat-number" id="statProjects">0</span>
+        <span class="stat-label">Projects</span>
+      </div>
+      <div class="hero-stat">
+        <span class="stat-number" id="statEvents">0</span>
+        <span class="stat-label">Events Held</span>
+      </div>
+      <div class="hero-stat">
+        <span class="stat-number" id="statSponsors">0</span>
+        <span class="stat-label">Industry Partners</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <a href="#about"><i class="fas fa-chevron-down"></i></a>
+  </div>
+</section>
+
+<!-- About SOE Section -->
+<section class="section" id="about">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-tag">About Us</span>
+      <h2>School of Engineering</h2>
+      <p>Egerton University's School of Engineering is a center of excellence in engineering education, research, and innovation in East Africa.</p>
+    </div>
+    <div class="about-split">
+      <div class="about-content reveal-left">
+        <h3>Shaping the Future of Engineering in Kenya</h3>
+        <p>The School of Engineering at Egerton University comprises four dynamic departments, offering programmes accredited by the Engineers Board of Kenya (EBK). Our graduates are leaders in infrastructure development, renewable energy, agricultural mechanization, and technology innovation across Africa.</p>
+        <div class="dept-list">
+          <div class="dept-item">
+            <div class="dept-icon"><i class="fas fa-bolt"></i></div>
+            <div>
+              <h4>Electrical &amp; Electronic Engineering</h4>
+              <p>Power systems, electronics, telecommunications, and control engineering</p>
+            </div>
+          </div>
+          <div class="dept-item">
+            <div class="dept-icon"><i class="fas fa-hard-hat"></i></div>
+            <div>
+              <h4>Civil &amp; Environmental Engineering</h4>
+              <p>Structural, geotechnical, water resources, and environmental engineering</p>
+            </div>
+          </div>
+          <div class="dept-item">
+            <div class="dept-icon"><i class="fas fa-cog"></i></div>
+            <div>
+              <h4>Mechanical &amp; Manufacturing Engineering</h4>
+              <p>Thermodynamics, mechanics, manufacturing, and industrial engineering</p>
+            </div>
+          </div>
+          <div class="dept-item">
+            <div class="dept-icon"><i class="fas fa-tractor"></i></div>
+            <div>
+              <h4>Agricultural &amp; Biosystems Engineering</h4>
+              <p>Farm mechanization, food processing, soil &amp; water conservation</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="about-features reveal-right">
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-lightbulb"></i></div>
+          <h4>Innovation Hub</h4>
+          <p>Student-led maker spaces and innovation labs for prototyping solutions to real-world challenges.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-award"></i></div>
+          <h4>EBK Accredited</h4>
+          <p>All programmes accredited by the Engineers Board of Kenya for professional registration.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-globe-africa"></i></div>
+          <h4>Industry Links</h4>
+          <p>Partnerships with leading engineering firms, NGOs, and government agencies in Kenya and beyond.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-users"></i></div>
+          <h4>Vibrant Community</h4>
+          <p>A supportive network of students, alumni, and faculty dedicated to engineering excellence.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- What We Do -->
+<section class="section section-dark" id="whatwedo">
+  <div class="container">
+    <div class="section-header light reveal">
+      <span class="section-tag">What We Do</span>
+      <h2>EESA's Mission</h2>
+      <p>Bridging the gap between academic engineering and professional practice through structured programmes.</p>
+    </div>
+    <div class="mission-grid">
+      <div class="mission-card reveal-scale" data-delay="1">
+        <div class="mission-number">01</div>
+        <div class="mission-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+        <h3>Workshops &amp; Training</h3>
+        <p>Hands-on technical workshops, coding bootcamps, and site visits organized throughout the academic year.</p>
+      </div>
+      <div class="mission-card reveal-scale" data-delay="2">
+        <div class="mission-number">02</div>
+        <div class="mission-icon"><i class="fas fa-project-diagram"></i></div>
+        <h3>Engineering Projects</h3>
+        <p>Collaborative multidisciplinary projects solving problems in energy, water, infrastructure, and agriculture.</p>
+      </div>
+      <div class="mission-card reveal-scale" data-delay="3">
+        <div class="mission-number">03</div>
+        <div class="mission-icon"><i class="fas fa-trophy"></i></div>
+        <h3>Competitions</h3>
+        <p>National and regional engineering competitions, exhibitions, and hackathons to showcase talent.</p>
+      </div>
+      <div class="mission-card reveal-scale" data-delay="4">
+        <div class="mission-number">04</div>
+        <div class="mission-icon"><i class="fas fa-briefcase"></i></div>
+        <h3>Industry Connection</h3>
+        <p>Career fairs, mentorship programmes, and industrial attachments connecting students with employers.</p>
+      </div>
+      <div class="mission-card reveal-scale" data-delay="5">
+        <div class="mission-number">05</div>
+        <div class="mission-icon"><i class="fas fa-hands-helping"></i></div>
+        <h3>Community Service</h3>
+        <p>Using engineering skills for social good — clean water projects, rural electrification, and technology access.</p>
+      </div>
+      <div class="mission-card reveal-scale" data-delay="6">
+        <div class="mission-number">06</div>
+        <div class="mission-icon"><i class="fas fa-book-reader"></i></div>
+        <h3>Resource Library</h3>
+        <p>Curated digital library of past papers, lab manuals, tutorials, and project references for all departments.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Projects Showcase -->
+<section class="section" id="projects">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-tag">Our Work</span>
+      <h2>Project Showcase</h2>
+      <p>Innovative engineering solutions built by EESA members across all departments.</p>
+    </div>
+    <div class="projects-filter">
+      <button class="filter-btn active" data-filter="all">All Projects</button>
+      <button class="filter-btn" data-filter="ongoing">Ongoing</button>
+      <button class="filter-btn" data-filter="completed">Completed</button>
+      <button class="filter-btn" data-filter="planning">Planning</button>
+    </div>
+    <div class="projects-grid" id="projectsGrid">
+      <div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Loading projects...</div>
+    </div>
+  </div>
+</section>
+
+<!-- News & Events -->
+<section class="section section-alt" id="events">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-tag">Stay Updated</span>
+      <h2>News &amp; Events</h2>
+      <p>The latest from EESA — upcoming events, achievements, and announcements.</p>
+    </div>
+    <div class="news-events-layout">
+      <!-- Events Column -->
+      <div class="ne-column">
+        <h3 class="ne-title"><i class="fas fa-calendar-alt"></i> Upcoming Events</h3>
+        <div class="events-list" id="eventsList">
+          <div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i></div>
+        </div>
+      </div>
+      <!-- News Column -->
+      <div class="ne-column">
+        <h3 class="ne-title"><i class="fas fa-newspaper"></i> Latest News</h3>
+        <div class="news-list" id="newsList">
+          <div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Sponsors / Partners -->
+<section class="section" id="sponsors">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-tag">Our Partners</span>
+      <h2>Sponsors &amp; Collaborators</h2>
+      <p>We are grateful to the organizations that invest in the future of engineering in Kenya.</p>
+    </div>
+
+    <!-- Sponsor Tiers -->
+    <div class="sponsors-showcase" id="sponsorsShowcase">
+      <div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i></div>
+    </div>
+
+    <!-- Partnership CTA -->
+    <div class="partnership-cta">
+      <div class="cta-content">
+        <h3>Become a Partner</h3>
+        <p>Join leading organizations in empowering the next generation of Kenyan engineers. Sponsorship & partnership opportunities include:</p>
+        <div class="cta-benefits">
+          <div class="benefit"><i class="fas fa-check-circle"></i> Brand visibility across all EESA events and platforms</div>
+          <div class="benefit"><i class="fas fa-check-circle"></i> Direct access to top engineering talent for recruitment</div>
+          <div class="benefit"><i class="fas fa-check-circle"></i> Co-branded workshops, hackathons, and technical programmes</div>
+          <div class="benefit"><i class="fas fa-check-circle"></i> CSR recognition and community impact partnerships</div>
+          <div class="benefit"><i class="fas fa-check-circle"></i> Logo placement on all EESA publications and merchandise</div>
+          <div class="benefit"><i class="fas fa-check-circle"></i> Priority recruitment booth at annual Engineering Career Fair</div>
+        </div>
+      </div>
+      <div class="cta-action">
+        <div class="cta-tiers">
+          <div class="tier-option">
+            <div class="tier-name">Bronze</div>
+            <div class="tier-desc">Event sponsorship &amp; logo visibility</div>
+          </div>
+          <div class="tier-option tier-highlight">
+            <div class="tier-name">Gold</div>
+            <div class="tier-desc">Full partnership with recruitment access</div>
+          </div>
+          <div class="tier-option">
+            <div class="tier-name">Platinum</div>
+            <div class="tier-desc">Strategic partnership &amp; naming rights</div>
+          </div>
+        </div>
+        <a href="mailto:eesa@egerton.ac.ke?subject=Partnership%20Inquiry" class="btn btn-accent btn-lg btn-block">
+          <i class="fas fa-envelope"></i> Get Partnership Prospectus
+        </a>
+        <p class="cta-note">Or call us: +254 700 000 000</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Impact Stats -->
+<section class="section section-stats">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-card reveal-scale" data-delay="1">
+        <div class="stat-icon"><i class="fas fa-user-graduate"></i></div>
+        <div class="stat-value">500+</div>
+        <div class="stat-desc">Engineering Students</div>
+      </div>
+      <div class="stat-card reveal-scale" data-delay="2">
+        <div class="stat-icon"><i class="fas fa-flask"></i></div>
+        <div class="stat-value">50+</div>
+        <div class="stat-desc">Projects Delivered</div>
+      </div>
+      <div class="stat-card reveal-scale" data-delay="3">
+        <div class="stat-icon"><i class="fas fa-calendar-check"></i></div>
+        <div class="stat-value">30+</div>
+        <div class="stat-desc">Annual Events</div>
+      </div>
+      <div class="stat-card reveal-scale" data-delay="4">
+        <div class="stat-icon"><i class="fas fa-building"></i></div>
+        <div class="stat-value">4</div>
+        <div class="stat-desc">Departments</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Membership CTA -->
+<section class="section section-dark" id="join">
+  <div class="container">
+    <div class="join-cta">
+      <h2>Ready to Join EESA?</h2>
+      <p>Membership is open to all Egerton University School of Engineering students. Register online, pay a one-time KSh 100 registration fee and a KSh 50 semester renewal fee to unlock all benefits.</p>
+      <div class="join-steps">
+        <div class="join-step reveal-scale" data-delay="1">
+          <div class="step-icon"><i class="fas fa-user-plus"></i></div>
+          <h4>1. Register</h4>
+          <p>Create your account with your Egerton reg number</p>
+        </div>
+        <div class="join-step reveal-scale" data-delay="2">
+          <div class="step-icon"><i class="fas fa-mobile-alt"></i></div>
+          <h4>2. Pay via M-Pesa</h4>
+          <p>Pay KSh 100 registration + KSh 50 semester fee</p>
+        </div>
+        <div class="join-step reveal-scale" data-delay="3">
+          <div class="step-icon"><i class="fas fa-check-circle"></i></div>
+          <h4>3. Get Verified</h4>
+          <p>Admin verifies & activates your membership</p>
+        </div>
+      </div>
+      <a href="#" class="btn btn-accent btn-lg" onclick="showAuthModal('register');return false;">
+        <i class="fas fa-rocket"></i> Register Now
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="section" id="contact">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-tag">Get in Touch</span>
+      <h2>Contact Us</h2>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info reveal-left">
+        <div class="contact-item">
+          <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <div>
+            <h4>Address</h4>
+            <p>School of Engineering<br>Egerton University<br>P.O. Box 536 - 20115, Egerton, Kenya</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+          <div>
+            <h4>Email</h4>
+            <p>eesa@egerton.ac.ke</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon"><i class="fas fa-phone"></i></div>
+          <div>
+            <h4>Phone</h4>
+            <p>+254 700 000 000</p>
+          </div>
+        </div>
+        <div class="contact-socials">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+      <div class="contact-map reveal-right">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.763!2d35.937!3d-0.367!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sEgerton+University!5e0!3m2!1sen!2ske!4v1" width="100%" height="350" style="border:0;border-radius:12px;" allowfullscreen loading="lazy"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-about">
+        <div class="footer-brand">
+          <img src="/images/eesa-logo.svg" alt="EESA Logo" class="footer-logo"> EESA
+        </div>
+        <p>Egerton Engineering Student Association — empowering future engineers through innovation, collaboration, and excellence since establishment.</p>
+        <div class="footer-socials">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://x.com/EESA_Egertonuni" target="_blank" rel="noopener noreferrer"><i class="fab fa-x-twitter"></i></a>
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+      <div class="footer-links-col">
+        <h4>Quick Links</h4>
+        <a href="#about">About SOE</a>
+        <a href="#projects">Projects</a>
+        <a href="#events">News & Events</a>
+        <a href="#sponsors">Partners</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="footer-links-col">
+        <h4>For Members</h4>
+        <a href="#" onclick="showAuthModal('login');return false;">Member Login</a>
+        <a href="#" onclick="showAuthModal('register');return false;">Register</a>
+        <a href="/portal">Member Portal</a>
+        <a href="#join">Membership Info</a>
+      </div>
+      <div class="footer-links-col">
+        <h4>Partnerships</h4>
+        <a href="mailto:eesa@egerton.ac.ke?subject=Sponsorship">Become a Sponsor</a>
+        <a href="mailto:eesa@egerton.ac.ke?subject=Partnership">Industry Partnership</a>
+        <a href="mailto:eesa@egerton.ac.ke?subject=CSR">CSR Collaboration</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Egerton Engineering Student Association. All rights reserved.</p>
+      <p>School of Engineering, Egerton University, Njoro, Kenya</p>
+    </div>
+  </div>
+</footer>
+
+<!-- Auth Modal -->
+<div class="modal-overlay" id="authModal">
+  <div class="modal auth-modal">
+    <button class="modal-close" onclick="hideAuthModal()">&times;</button>
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-tab="login" onclick="switchAuthTab('login')">Sign In</button>
+      <button class="auth-tab" data-tab="register" onclick="switchAuthTab('register')">Register</button>
+    </div>
+    <!-- Login Form -->
+    <form class="auth-form" id="loginForm" onsubmit="handleLogin(event)">
+      <h3>Welcome Back</h3>
+      <p class="auth-desc">Sign in to access your EESA member portal.</p>
+      <div class="form-group">
+        <label>Email Address</label>
+        <div class="input-icon"><i class="fas fa-envelope"></i><input type="email" name="email" required placeholder="you@students.egerton.ac.ke"></div>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <div class="input-icon"><i class="fas fa-lock"></i><input type="password" name="password" required placeholder="Enter your password"></div>
+      </div>
+      <div id="loginError" class="form-error"></div>
+      <button type="submit" class="btn btn-primary btn-block btn-lg">
+        <i class="fas fa-sign-in-alt"></i> Sign In
+      </button>
+    </form>
+    <!-- Register Form -->
+    <form class="auth-form" id="registerForm" style="display:none;" onsubmit="handleRegister(event)">
+      <h3>Join EESA</h3>
+      <p class="auth-desc">Register as a School of Engineering student member.</p>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" name="fullName" required placeholder="John Kamau">
+        </div>
+        <div class="form-group">
+          <label>Reg Number</label>
+          <input type="text" name="regNumber" required placeholder="EN101-0001/2024">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" name="email" required placeholder="you@students.egerton.ac.ke">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Department</label>
+          <select name="department" required>
+            <option value="">Select department</option>
+            <option>Electrical &amp; Electronic Engineering</option>
+            <option>Civil Engineering</option>
+            <option>Mechanical Engineering</option>
+            <option>Agricultural Engineering</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Year of Study</label>
+          <select name="yearOfStudy" required>
+            <option value="">Year</option>
+            <option value="1">1st Year</option>
+            <option value="2">2nd Year</option>
+            <option value="3">3rd Year</option>
+            <option value="4">4th Year</option>
+            <option value="5">5th Year</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Phone</label>
+          <input type="tel" name="phone" placeholder="0712345678">
+        </div>
+        <div class="form-group">
+          <label>Gender</label>
+          <select name="gender">
+            <option value="">Select</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" name="password" required minlength="6" placeholder="At least 6 characters">
+      </div>
+      <div id="registerError" class="form-error"></div>
+      <div id="registerSuccess" class="form-success"></div>
+      <button type="submit" class="btn btn-primary btn-block btn-lg">
+        <i class="fas fa-user-plus"></i> Create Account
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- Back to Top Button -->
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <i class="fas fa-arrow-up"></i>
+</button>
+
+<script src="/js/landing.js"></script>
+</body>
+</html>

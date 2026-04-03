@@ -1,0 +1,153 @@
+#root {
+  min-height: 100vh;
+}
+
+/* ── Navbar logo & brand ───────────────────────── */
+.nav-logo { width: 42px; height: 42px; border-radius: 50%; object-fit: cover; }
+.brand-title { font-size: 1.2rem; font-weight: 700; line-height: 1.2; }
+.brand-subtitle { display: block; font-size: .6rem; font-weight: 400; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,.6); line-height: 1; }
+
+/* ── Hero background image ─────────────────────── */
+.hero-bg { position: absolute; inset: 0; z-index: 0;
+  background: url('/images/eesa-logo.svg') center center / 280px no-repeat;
+  opacity: .06; pointer-events: none; }
+
+.react-shell {
+  min-height: 100vh;
+  background: var(--gray-100);
+}
+
+.react-navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.react-home-grid,
+.react-data-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.react-section-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  padding: 20px;
+}
+
+.react-list {
+  display: grid;
+  gap: 12px;
+}
+
+.react-empty {
+  color: var(--gray-500);
+  text-align: center;
+  padding: 20px;
+}
+
+.react-footer-note {
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 8px;
+}
+
+.login-tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 20px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--gray-200);
+}
+
+.login-tab {
+  flex: 1;
+  padding: 10px 0;
+  border: none;
+  background: var(--gray-100);
+  color: var(--gray-600);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.88rem;
+  transition: all 0.2s;
+}
+
+.login-tab.active {
+  background: var(--primary);
+  color: #fff;
+}
+
+.login-tab:hover:not(.active) {
+  background: var(--gray-200);
+}
+
+.login-role-form {
+  display: none;
+}
+
+.login-role-form.active {
+  display: block;
+}
+
+.react-dashboard-shell .main-content {
+  min-height: 100vh;
+}
+
+@media (max-width: 768px) {
+  .react-navbar-actions {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .login-tabs {
+    flex-wrap: wrap;
+  }
+
+  .login-tab {
+    min-width: 50%;
+  }
+}
+
+/* ── Dashboard section pages ───────────────────── */
+.page-section { padding: 0; }
+.page-section h2 { font-size: 1.2rem; color: var(--gray-800); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+.page-section h2 i { color: var(--accent); }
+
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+
+.filter-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+
+.stat-card { background: var(--white); border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow); display: flex; align-items: center; gap: 14px; }
+.stat-card .stat-icon { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+.stat-card .stat-info h3 { font-size: 1.5rem; font-weight: 700; line-height: 1.2; }
+.stat-card .stat-info p { font-size: .82rem; color: var(--gray-500); margin: 0; }
+
+.data-table-wrapper { overflow-x: auto; border-radius: var(--radius); }
+
+.form-error { color: var(--danger); font-size: .85rem; }
+
+/* toast override for React toasts */
+.toast-container { position: fixed; top: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 8px; }
+.toast-item { padding: 12px 20px; border-radius: var(--radius); color: #fff; font-size: .88rem; box-shadow: 0 4px 12px rgba(0,0,0,.2); animation: toastIn .3s ease; }
+.toast-item.success { background: var(--success); }
+.toast-item.error { background: var(--danger); }
+.toast-item.info { background: var(--info); }
+@keyframes toastIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* modal overlay */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.45); display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
+.modal-card { background: var(--white); border-radius: var(--radius-lg); box-shadow: 0 20px 60px rgba(0,0,0,.3); padding: 24px; max-width: 560px; width: 100%; max-height: 80vh; overflow-y: auto; animation: modalIn .2s ease; }
+.modal-card.modal-lg { max-width: 800px; }
+.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.modal-header h3 { font-size: 1.1rem; color: var(--gray-800); }
+.modal-header button { background: none; border: none; font-size: 1.3rem; cursor: pointer; color: var(--gray-500); }
+@keyframes modalIn { from { opacity: 0; transform: scale(.95); } to { opacity: 1; transform: scale(1); } }
+
+@media (max-width: 768px) {
+  .form-row { grid-template-columns: 1fr; }
+  .form-grid { grid-template-columns: 1fr; }
+  .stat-card { flex-direction: column; text-align: center; }
+}

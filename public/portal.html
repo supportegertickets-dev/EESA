@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EESA Member Portal</title>
+  <link rel="icon" type="image/svg+xml" href="/images/eesa-logo.svg">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#800020">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="portal-page">
+
+<!-- Sidebar -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-brand">
+      <img src="/images/eesa-logo.svg" alt="EESA" class="sidebar-logo">
+      <span>EESA Portal</span>
+    </div>
+    <button class="sidebar-close" onclick="toggleSidebar()"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="sidebar-user" id="sidebarUser">
+    <div class="user-avatar"><i class="fas fa-user-circle"></i></div>
+    <div class="user-info">
+      <span class="user-name" id="userName">Member</span>
+      <span class="user-badge" id="userBadge">Loading...</span>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <a href="#" class="nav-item active" data-section="overview" onclick="showSection('overview')">
+      <i class="fas fa-tachometer-alt"></i><span>Dashboard</span>
+    </a>
+    <a href="#" class="nav-item" data-section="membership" onclick="showSection('membership')">
+      <i class="fas fa-id-card"></i><span>Membership</span>
+    </a>
+    <a href="#" class="nav-item" data-section="resources" onclick="showSection('resources')">
+      <i class="fas fa-book-open"></i><span>Resource Library</span>
+    </a>
+    <a href="#" class="nav-item" data-section="elections" onclick="showSection('elections')">
+      <i class="fas fa-vote-yea"></i><span>Elections</span>
+    </a>
+    <a href="#" class="nav-item" data-section="attendance" onclick="showSection('attendance')">
+      <i class="fas fa-clipboard-check"></i><span>Attendance</span>
+    </a>
+    <a href="#" class="nav-item" data-section="events" onclick="showSection('events')">
+      <i class="fas fa-calendar-alt"></i><span>Events</span>
+    </a>
+    <a href="#" class="nav-item" data-section="announcements" onclick="showSection('announcements')">
+      <i class="fas fa-bullhorn"></i><span>Announcements</span>
+    </a>
+    <a href="#" class="nav-item" data-section="clubs" onclick="showSection('clubs')">
+      <i class="fas fa-users-cog"></i><span>Clubs</span>
+    </a>
+    <a href="#" class="nav-item" data-section="units" onclick="showSection('units')">
+      <i class="fas fa-chalkboard-teacher"></i><span>My Units</span>
+    </a>
+    <a href="#" class="nav-item" data-section="forum" onclick="showSection('forum')">
+      <i class="fas fa-comments"></i><span>Forum</span>
+    </a>
+    <a href="#" class="nav-item" data-section="polls" onclick="showSection('polls')">
+      <i class="fas fa-chart-bar"></i><span>Polls &amp; Surveys</span>
+    </a>
+    <a href="#" class="nav-item" data-section="directory" onclick="showSection('directory')">
+      <i class="fas fa-address-book"></i><span>Member Directory</span>
+    </a>
+    <a href="#" class="nav-item nav-item-exec" data-section="exec-comms" onclick="showSection('exec-comms')" id="navExecComms" style="display:none;">
+      <i class="fas fa-crown"></i><span>Executive Board</span>
+    </a>
+    <a href="#" class="nav-item" data-section="profile" onclick="showSection('profile')">
+      <i class="fas fa-user-cog"></i><span>My Profile</span>
+    </a>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="/" class="nav-item"><i class="fas fa-globe"></i><span>Main Website</span></a>
+    <a href="#" class="nav-item" onclick="logout()"><i class="fas fa-sign-out-alt"></i><span>Sign Out</span></a>
+  </div>
+</aside>
+
+<!-- Main Content -->
+<main class="main-content" id="mainContent">
+  <!-- Top Bar -->
+  <header class="topbar">
+    <button class="menu-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+    <h2 class="page-title" id="pageTitle">Dashboard</h2>
+    <div class="topbar-actions">
+      <div class="notification-bell" onclick="toggleNotifications()">
+        <i class="fas fa-bell"></i>
+        <span class="notif-badge" id="notifBadge" style="display:none;">0</span>
+      </div>
+      <button class="dark-mode-toggle" onclick="toggleDarkMode()" title="Toggle dark mode">
+        <i class="fas fa-moon" id="darkModeIcon"></i>
+      </button>
+      <span class="topbar-greeting" id="topbarGreeting">Welcome!</span>
+    </div>
+    <!-- Notification Dropdown -->
+    <div class="notification-dropdown" id="notifDropdown" style="display:none;">
+      <div class="notif-header">
+        <h4>Notifications</h4>
+        <a href="#" onclick="markAllNotificationsRead()">Mark all read</a>
+      </div>
+      <div class="notif-list" id="notifList">
+        <div class="notif-empty">No notifications</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- === DASHBOARD / OVERVIEW === -->
+  <section class="content-section active" id="sec-overview">
+    <!-- Status Banner -->
+    <div class="status-banner" id="statusBanner">
+      <div class="status-icon"><i class="fas fa-info-circle"></i></div>
+      <div class="status-text" id="statusText">Checking account status...</div>
+    </div>
+
+    <div class="dashboard-grid">
+      <div class="dash-card">
+        <div class="dash-card-icon bg-primary"><i class="fas fa-id-badge"></i></div>
+        <div class="dash-card-info">
+          <span class="dash-card-label">Status</span>
+          <span class="dash-card-value" id="dashStatus">--</span>
+        </div>
+      </div>
+      <div class="dash-card">
+        <div class="dash-card-icon bg-success"><i class="fas fa-credit-card"></i></div>
+        <div class="dash-card-info">
+          <span class="dash-card-label">Registration Fee</span>
+          <span class="dash-card-value" id="dashRegFee">--</span>
+        </div>
+      </div>
+      <div class="dash-card">
+        <div class="dash-card-icon bg-accent"><i class="fas fa-calendar-check"></i></div>
+        <div class="dash-card-info">
+          <span class="dash-card-label">Current Semester</span>
+          <span class="dash-card-value" id="dashSemester">--</span>
+        </div>
+      </div>
+      <div class="dash-card">
+        <div class="dash-card-icon bg-info"><i class="fas fa-clipboard-list"></i></div>
+        <div class="dash-card-info">
+          <span class="dash-card-label">Events Attended</span>
+          <span class="dash-card-value" id="dashAttendance">--</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions">
+      <h3><i class="fas fa-bolt"></i> Quick Actions</h3>
+      <div class="actions-grid">
+        <button class="action-btn" onclick="showSection('membership')"><i class="fas fa-credit-card"></i> Pay Fees</button>
+        <button class="action-btn" onclick="showSection('resources')"><i class="fas fa-download"></i> Resources</button>
+        <button class="action-btn" onclick="showSection('elections')"><i class="fas fa-vote-yea"></i> Vote</button>
+        <button class="action-btn" onclick="showSection('attendance')"><i class="fas fa-clipboard-check"></i> Check In</button>
+      </div>
+    </div>
+
+    <!-- Recent Announcements -->
+    <div class="portal-card">
+      <h3><i class="fas fa-bullhorn"></i> Latest Announcements</h3>
+      <div id="dashAnnouncements" class="announcement-feed">
+        <div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- === MEMBERSHIP & PAYMENTS === -->
+  <section class="content-section" id="sec-membership">
+    <div class="section-intro">
+      <h3>Membership & Payments</h3>
+      <p>Manage your EESA membership, pay registration and semester renewal fees.</p>
+    </div>
+
+    <!-- Membership Status -->
+    <div class="membership-status-card" id="membershipStatusCard">
+      <div class="ms-header">
+        <h4>Your Membership</h4>
+        <span class="badge" id="memberBadge">--</span>
+      </div>
+      <div class="ms-details">
+        <div class="ms-item"><label>Reg Number</label><span id="msRegNo">--</span></div>
+        <div class="ms-item"><label>Department</label><span id="msDept">--</span></div>
+        <div class="ms-item"><label>Year of Study</label><span id="msYear">--</span></div>
+        <div class="ms-item"><label>Verified</label><span id="msVerified">--</span></div>
+        <div class="ms-item"><label>Registration Fee</label><span id="msRegFee">--</span></div>
+        <div class="ms-item"><label>Current Semester</label><span id="msSemester">--</span></div>
+      </div>
+    </div>
+
+    <!-- Payment Forms -->
+    <div class="payment-cards">
+      <div class="payment-card" id="regPaymentCard">
+        <div class="pc-header bg-primary">
+          <i class="fas fa-user-check"></i>
+          <h4>Registration Fee</h4>
+          <div class="pc-amount">KSh 100</div>
+        </div>
+        <div class="pc-body">
+          <p>One-time fee to activate your EESA membership.</p>
+          <form onsubmit="submitPayment(event, 'registration')">
+            <div class="form-group">
+              <label>M-Pesa Transaction Code</label>
+              <input type="text" name="mpesaCode" required placeholder="e.g. SBK7Y5FT6C" pattern="[A-Za-z0-9]+" title="Letters and numbers only">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-paper-plane"></i> Submit Payment</button>
+          </form>
+        </div>
+      </div>
+      <div class="payment-card" id="renewalPaymentCard">
+        <div class="pc-header bg-accent">
+          <i class="fas fa-sync-alt"></i>
+          <h4>Semester Renewal</h4>
+          <div class="pc-amount">KSh 50</div>
+        </div>
+        <div class="pc-body">
+          <p>Renew your membership each semester to stay active.</p>
+          <form onsubmit="submitPayment(event, 'renewal')">
+            <div class="form-group">
+              <label>M-Pesa Transaction Code</label>
+              <input type="text" name="mpesaCode" required placeholder="e.g. SBK7Y5FT6C" pattern="[A-Za-z0-9]+" title="Letters and numbers only">
+            </div>
+            <button type="submit" class="btn btn-accent btn-block"><i class="fas fa-paper-plane"></i> Submit Renewal</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Payment History -->
+    <div class="portal-card">
+      <h3><i class="fas fa-history"></i> Payment History</h3>
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr><th>Date</th><th>Type</th><th>Amount</th><th>M-Pesa Code</th><th>Status</th></tr>
+          </thead>
+          <tbody id="paymentHistory">
+            <tr><td colspan="5" class="text-center"><i class="fas fa-spinner fa-spin"></i> Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- === RESOURCE LIBRARY === -->
+  <section class="content-section" id="sec-resources">
+    <div class="section-intro">
+      <h3>Resource Library</h3>
+      <p>Access past papers, notes, lab manuals, tutorials, and project references.</p>
+    </div>
+
+    <!-- Filters -->
+    <div class="resource-filters">
+      <select id="resourceCategoryFilter" onchange="loadResources()">
+        <option value="">All Categories</option>
+        <option value="past-papers">Past Papers</option>
+        <option value="notes">Lecture Notes</option>
+        <option value="lab-manuals">Lab Manuals</option>
+        <option value="tutorials">Tutorials</option>
+        <option value="projects">Project References</option>
+        <option value="other">Other</option>
+      </select>
+      <select id="resourceDeptFilter" onchange="loadResources()">
+        <option value="">All Departments</option>
+        <option>Electrical &amp; Electronic Engineering</option>
+        <option>Civil Engineering</option>
+        <option>Mechanical Engineering</option>
+        <option>Agricultural Engineering</option>
+      </select>
+      <input type="text" id="resourceSearch" placeholder="Search resources..." onkeyup="debounceResourceSearch()">
+    </div>
+
+    <!-- Resource Grid -->
+    <div class="resource-grid" id="resourceGrid">
+      <div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Loading resources...</div>
+    </div>
+  </section>
+
+  <!-- === VOTING & ELECTIONS === -->
+  <section class="content-section" id="sec-elections">
+    <div class="section-intro">
+      <h3>Voting &amp; Elections</h3>
+      <p>Participate in EESA elections and shape the leadership of your association.</p>
+    </div>
+
+    <!-- Active Elections -->
+    <div id="electionsContainer">
+      <div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Loading elections...</div>
+    </div>
+  </section>
+
+  <!-- === ATTENDANCE === -->
+  <section class="content-section" id="sec-attendance">
+    <div class="section-intro">
+      <h3>Attendance</h3>
+      <p>Check in to events and view your attendance history.</p>
+    </div>
+
+    <!-- Self Check-in -->
+    <div class="portal-card">
+      <h4><i class="fas fa-qrcode"></i> Event Check-In</h4>
+      <p>Select an ongoing event to check yourself in.</p>
+      <div class="checkin-form">
+        <select id="checkinEventSelect">
+          <option value="">Select an event...</option>
+        </select>
+        <button class="btn btn-primary" onclick="selfCheckIn()"><i class="fas fa-check"></i> Check In</button>
+      </div>
+      <div id="checkinMsg" class="form-msg"></div>
+    </div>
+
+    <!-- Attendance History -->
+    <div class="portal-card">
+      <h4><i class="fas fa-history"></i> My Attendance History</h4>
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr><th>Event</th><th>Date</th><th>Location</th><th>Check-in Time</th><th>Method</th></tr>
+          </thead>
+          <tbody id="attendanceHistory">
+            <tr><td colspan="5" class="text-center"><i class="fas fa-spinner fa-spin"></i></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- === EVENTS === -->
+  <section class="content-section" id="sec-events">
+    <div class="section-intro">
+      <h3>Events</h3>
+      <p>Browse and register for upcoming EESA events.</p>
+    </div>
+    <div class="events-filter-bar">
+      <button class="filter-btn active" data-filter="all" onclick="filterEvents('all',this)">All</button>
+      <button class="filter-btn" data-filter="upcoming" onclick="filterEvents('upcoming',this)">Upcoming</button>
+      <button class="filter-btn" data-filter="ongoing" onclick="filterEvents('ongoing',this)">Ongoing</button>
+      <button class="filter-btn" data-filter="completed" onclick="filterEvents('completed',this)">Past</button>
+    </div>
+    <div class="events-grid" id="portalEventsGrid">
+      <div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i></div>
+    </div>
+  </section>
+
+  <!-- === ANNOUNCEMENTS === -->
+  <section class="content-section" id="sec-announcements">
+    <div class="section-intro">
+      <h3>Announcements</h3>
+      <p>Stay updated with the latest news from EESA.</p>
+    </div>
+    <div class="announcements-feed" id="portalAnnouncements">
+      <div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i></div>
+    </div>
+  </section>
+
+  <!-- === CLUBS === -->
+  <section class="content-section" id="sec-clubs">
+    <div class="section-intro">
+      <h3>Clubs &amp; Societies</h3>
+      <p>Join clubs, participate in activities, and connect with fellow engineers.</p>
+    </div>
+    <div class="clubs-grid" id="clubsGrid">
+      <div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Loading clubs...</div>
+    </div>
+    <!-- Club Detail View -->
+    <div id="clubDetailView" style="display:none;">
+      <button class="btn btn-ghost" onclick="backToClubs()" style="margin-bottom:14px;"><i class="fas fa-arrow-left"></i> Back to Clubs</button>
+      <div id="clubDetailContent"></div>
+    </div>
+  </section>
+
+  <!-- === MY UNITS === -->
+  <section class="content-section" id="sec-units">
+    <div class="section-intro">
+      <h3>My Units &amp; Coursework</h3>
+      <p>Register for units, view assignments, and track attendance.</p>
+    </div>
+    <div class="units-tabs">
+      <button class="tab-btn active" onclick="switchUnitTab('available',this)">Available Units</button>
+      <button class="tab-btn" onclick="switchUnitTab('enrolled',this)">My Enrolled Units</button>
+    </div>
+    <div id="unitsContainer">
+      <div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Loading units...</div>
+    </div>
+    <!-- Unit Detail -->
+    <div id="unitDetailView" style="display:none;">
+      <button class="btn btn-ghost" onclick="backToUnits()" style="margin-bottom:14px;"><i class="fas fa-arrow-left"></i> Back to Units</button>
+      <div id="unitDetailContent"></div>
+    </div>
+  </section>
+
+  <!-- === EXECUTIVE BOARD === -->
+  <section class="content-section" id="sec-exec-comms">
+    <div class="section-intro">
+      <h3><i class="fas fa-crown"></i> Executive Communication Board</h3>
+      <p>Private communication space for EESA executive council members.</p>
+    </div>
+    <div class="exec-toolbar">
+      <button class="btn btn-primary" onclick="showNewMessage()"><i class="fas fa-pen"></i> New Message</button>
+    </div>
+    <!-- New Message Form -->
+    <div class="form-card" id="execMsgForm" style="display:none;">
+      <h4>New Discussion</h4>
+      <form onsubmit="postExecMessage(event)">
+        <div class="form-group"><label>Subject</label><input type="text" id="execMsgSubject" required></div>
+        <div class="form-group"><label>Message</label><textarea id="execMsgBody" rows="4" required></textarea></div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Post</button>
+          <button type="button" class="btn btn-ghost" onclick="$('execMsgForm').style.display='none'">Cancel</button>
+        </div>
+      </form>
+    </div>
+    <div id="execMessagesContainer">
+      <div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Loading messages...</div>
+    </div>
+  </section>
+
+  <!-- === FORUM === -->
+  <section class="content-section" id="sec-forum">
+    <div class="section-intro">
+      <h3><i class="fas fa-comments"></i> Discussion Forum</h3>
+      <p>Engage with fellow engineers — ask questions, share knowledge, and collaborate.</p>
+    </div>
+    <div class="forum-toolbar">
+      <button class="btn btn-primary" onclick="showNewTopicForm()"><i class="fas fa-plus"></i> New Topic</button>
+      <select id="forumCategoryFilter" onchange="loadForumTopics()">
+        <option value="">All Categories</option>
+        <option value="general">General</option>
+        <option value="academic">Academic</option>
+        <option value="technical">Technical</option>
+        <option value="social">Social</option>
+        <option value="career">Career</option>
+        <option value="feedback">Feedback</option>
+      </select>
+      <input type="text" id="forumSearch" placeholder="Search topics..." onkeyup="debounceForumSearch()">
+    </div>
+    <!-- New Topic Form -->
+    <div class="form-card" id="newTopicForm" style="display:none;">
+      <h4>Create New Topic</h4>
+      <form onsubmit="createForumTopic(event)">
+        <div class="form-group"><label>Title</label><input type="text" id="topicTitle" required></div>
+        <div class="form-group">
+          <label>Category</label>
+          <select id="topicCategory">
+            <option value="general">General</option>
+            <option value="academic">Academic</option>
+            <option value="technical">Technical</option>
+            <option value="social">Social</option>
+            <option value="career">Career</option>
+            <option value="feedback">Feedback</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Tags (comma-separated)</label><input type="text" id="topicTags" placeholder="e.g. circuits, exam, help"></div>
+        <div class="form-group"><label>Message</label><textarea id="topicBody" rows="5" required></textarea></div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Post Topic</button>
+          <button type="button" class="btn btn-ghost" onclick="$('newTopicForm').style.display='none'">Cancel</button>
+        </div>
+      </form>
+    </div>
+    <div id="forumTopicsContainer">
+      <div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Loading topics...</div>
+    </div>
+    <!-- Topic Detail View -->
+    <div id="topicDetailView" style="display:none;">
+      <button class="btn btn-ghost" onclick="backToForum()" style="margin-bottom:14px;"><i class="fas fa-arrow-left"></i> Back to Forum</button>
+      <div id="topicDetailContent"></div>
+    </div>
+  </section>
+
+  <!-- === POLLS === -->
+  <section class="content-section" id="sec-polls">
+    <div class="section-intro">
+      <h3><i class="fas fa-chart-bar"></i> Polls &amp; Surveys</h3>
+      <p>Share your opinion — vote on polls and help shape EESA decisions.</p>
+    </div>
+    <div id="pollsContainer">
+      <div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Loading polls...</div>
+    </div>
+  </section>
+
+  <!-- === MEMBER DIRECTORY === -->
+  <section class="content-section" id="sec-directory">
+    <div class="section-intro">
+      <h3><i class="fas fa-address-book"></i> Member Directory</h3>
+      <p>Find and connect with fellow EESA members.</p>
+    </div>
+    <div class="directory-filters">
+      <input type="text" id="directorySearch" placeholder="Search by name or reg number..." onkeyup="debounceDirectorySearch()">
+      <select id="directoryDept" onchange="loadDirectory()">
+        <option value="">All Departments</option>
+        <option>Electrical &amp; Electronic Engineering</option>
+        <option>Civil Engineering</option>
+        <option>Mechanical Engineering</option>
+        <option>Agricultural Engineering</option>
+      </select>
+      <select id="directoryYear" onchange="loadDirectory()">
+        <option value="">All Years</option>
+        <option value="1">Year 1</option>
+        <option value="2">Year 2</option>
+        <option value="3">Year 3</option>
+        <option value="4">Year 4</option>
+        <option value="5">Year 5</option>
+      </select>
+    </div>
+    <div class="directory-grid" id="directoryGrid">
+      <div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Loading...</div>
+    </div>
+  </section>
+
+  <!-- === PROFILE === -->
+  <section class="content-section" id="sec-profile">
+    <div class="section-intro">
+      <h3>My Profile</h3>
+      <p>View and update your personal information.</p>
+    </div>
+    <div class="profile-grid">
+      <div class="portal-card profile-info-card">
+        <h4><i class="fas fa-user"></i> Personal Information</h4>
+        <div class="profile-details" id="profileDetails">
+          <div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i></div>
+        </div>
+      </div>
+      <div class="portal-card">
+        <h4><i class="fas fa-key"></i> Change Password</h4>
+        <form onsubmit="changePassword(event)">
+          <div class="form-group">
+            <label>Current Password</label>
+            <input type="password" id="currentPassword" required>
+          </div>
+          <div class="form-group">
+            <label>New Password</label>
+            <input type="password" id="newPassword" required minlength="6">
+          </div>
+          <div class="form-group">
+            <label>Confirm New Password</label>
+            <input type="password" id="confirmPassword" required minlength="6">
+          </div>
+          <div id="passwordMsg" class="form-msg"></div>
+          <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Update Password</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script src="/js/portal.js"></script>
+<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/service-worker.js');}</script>
+</body>
+</html>

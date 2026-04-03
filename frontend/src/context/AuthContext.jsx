@@ -1,0 +1,71 @@
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+
+const AuthContext = createContext(null);
+
+const ROLE_CONFIG = {
+  member:   { loginUrl: '/api/auth/member/login',   checkUrl: '/api/auth/member/me',   logoutUrl: '/api/auth/member/logout' },
+  admin:    { loginUrl: '/api/auth/admin/login',    checkUrl: '/api/auth/admin/me',    logoutUrl: '/api/auth/admin/logout' },
+  lecturer: { loginUrl: '/api/auth/lecturer/login', checkUrl: '/api/auth/lecturer/me', logoutUrl: '/api/auth/lecturer/logout' },
+  sponsor:  { loginUrl: '/api/sponsors/auth/login', checkUrl: '/api/sponsors/auth/me', logoutUrl: '/api/sponsors/auth/logout' }
+};
+
+export function AuthProvider({ children }) {
+  const [user, setUser] = useState(null);
+  const [role, setRole] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const checkSession = useCallback(async () => {
+    for (const [r, cfg] of Object.entries(ROLE_CONFIG)) {
+      try {
+        const res = await fetch(cfg.checkUrl);
+        if (res.ok) {
+          const data = await res.json();
+          const u = data.member || data.admin || data.lecturer || data.sponsor || data;
+          setUser(u);
+          setRole(r);
+          setLoading(false);
+          return;
+        }
+      } catch { /* next role */ }
+    }
+    setLoading(false);
+  }, []);
+
+  useEffect(() => { checkSession(); }, [checkSession]);
+
+  const login = async (r, credentials) => {
+    const cfg = ROLE_CONFIG[r];
+    if (!cfg) throw new Error('Invalid role');
+    const res = await fetch(cfg.loginUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(credentials)
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Login failed');
+    const u = data.member || data.admin || data.lecturer || data.sponsor || data;
+    setUser(u);
+    setRole(r);
+    return u;
+  };
+
+  const logout = async () => {
+    if (role && ROLE_CONFIG[role]) {
+      await fetch(ROLE_CONFIG[role].logoutUrl, { method: 'POST' }).catch(() => {});
+    }
+    setUser(null);
+    setRole(null);
+  };
+
+  return (
+    <AuthContext.Provider value={{ user, role, loading, login, logout, checkSession, setUser }}>
+      {children}
+    </AuthContext.Provider>
+  );
+}
+
+export function useAuth() {
+  const ctx = useContext(AuthContext);
+  if (!ctx) throw new Error('useAuth must be inside AuthProvider');
+  return ctx;
+}

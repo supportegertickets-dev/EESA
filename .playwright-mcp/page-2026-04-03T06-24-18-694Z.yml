@@ -1,0 +1,24 @@
+- generic [ref=e4]:
+  - generic [ref=e5]:
+    - img "EESA" [ref=e6]
+    - heading "EESA Portal" [level=2] [ref=e7]
+    - paragraph [ref=e8]: Sign in to your account
+  - generic [ref=e9]:
+    - button "Member" [ref=e10] [cursor=pointer]
+    - button "Admin" [ref=e11] [cursor=pointer]
+    - button "Lecturer" [ref=e12] [cursor=pointer]
+    - button "Sponsor" [ref=e13] [cursor=pointer]
+  - generic [ref=e14]:
+    - generic [ref=e15]:
+      - generic [ref=e16]: Email
+      - textbox "you@students.egerton.ac.ke" [ref=e17]: test@gmail.com
+    - generic [ref=e18]:
+      - generic [ref=e19]: Password
+      - textbox [active] [ref=e20]: admin123
+    - button " Sign In" [ref=e21] [cursor=pointer]:
+      - generic [ref=e22]: 
+      - text: Sign In
+    - paragraph [ref=e23]:
+      - text: New member?
+      - link "Create an account" [ref=e24] [cursor=pointer]:
+        - /url: /register

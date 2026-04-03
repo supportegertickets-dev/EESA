@@ -1,0 +1,148 @@
+- generic [ref=e25]:
+  - complementary [ref=e26]:
+    - generic [ref=e27]:
+      - generic [ref=e28]:
+        - img "EESA" [ref=e29]
+        - generic [ref=e30]: EESA Member Portal
+      - text: 
+    - generic [ref=e31]:
+      - generic [ref=e33]: 
+      - generic [ref=e34]:
+        - generic [ref=e35]: John Kamau
+        - generic [ref=e36]: pending
+    - navigation [ref=e37]:
+      - link " Dashboard" [ref=e38] [cursor=pointer]:
+        - /url: /portal
+        - generic [ref=e39]: 
+        - generic [ref=e40]: Dashboard
+      - link " Membership & Payments" [ref=e41] [cursor=pointer]:
+        - /url: /portal/membership
+        - generic [ref=e42]: 
+        - generic [ref=e43]: Membership & Payments
+      - link " Resource Library" [ref=e44] [cursor=pointer]:
+        - /url: /portal/resources
+        - generic [ref=e45]: 
+        - generic [ref=e46]: Resource Library
+      - link " Elections & Voting" [ref=e47] [cursor=pointer]:
+        - /url: /portal/elections
+        - generic [ref=e48]: 
+        - generic [ref=e49]: Elections & Voting
+      - link " Attendance" [ref=e50] [cursor=pointer]:
+        - /url: /portal/attendance
+        - generic [ref=e51]: 
+        - generic [ref=e52]: Attendance
+      - link " Events" [ref=e53] [cursor=pointer]:
+        - /url: /portal/events
+        - generic [ref=e54]: 
+        - generic [ref=e55]: Events
+      - link " Announcements" [ref=e56] [cursor=pointer]:
+        - /url: /portal/announcements
+        - generic [ref=e57]: 
+        - generic [ref=e58]: Announcements
+      - link " Clubs & Societies" [ref=e59] [cursor=pointer]:
+        - /url: /portal/clubs
+        - generic [ref=e60]: 
+        - generic [ref=e61]: Clubs & Societies
+      - link " My Units & Coursework" [ref=e62] [cursor=pointer]:
+        - /url: /portal/units
+        - generic [ref=e63]: 
+        - generic [ref=e64]: My Units & Coursework
+      - link " Discussion Forum" [ref=e65] [cursor=pointer]:
+        - /url: /portal/forum
+        - generic [ref=e66]: 
+        - generic [ref=e67]: Discussion Forum
+      - link " Polls & Surveys" [ref=e68] [cursor=pointer]:
+        - /url: /portal/polls
+        - generic [ref=e69]: 
+        - generic [ref=e70]: Polls & Surveys
+      - link " Member Directory" [ref=e71] [cursor=pointer]:
+        - /url: /portal/directory
+        - generic [ref=e72]: 
+        - generic [ref=e73]: Member Directory
+      - link " My Profile" [ref=e74] [cursor=pointer]:
+        - /url: /portal/profile
+        - generic [ref=e75]: 
+        - generic [ref=e76]: My Profile
+    - generic [ref=e77]:
+      - link " Main Website" [ref=e78] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e79]: 
+        - generic [ref=e80]: Main Website
+      - button " Sign Out" [ref=e81] [cursor=pointer]:
+        - generic [ref=e82]: 
+        - generic [ref=e83]: Sign Out
+  - main [ref=e84]:
+    - generic [ref=e85]:
+      - text: 
+      - heading "Dashboard" [level=2] [ref=e86]
+      - generic [ref=e87]:
+        - generic [ref=e89] [cursor=pointer]: 
+        - button "" [ref=e90] [cursor=pointer]:
+          - generic [ref=e91]: 
+        - generic [ref=e92]: Welcome, John!
+    - generic [ref=e93]:
+      - generic [ref=e95]:
+        - strong [ref=e96]: "Action required:"
+        - text: Pay registration fee to activate your account.
+      - generic [ref=e97]:
+        - generic [ref=e98]:
+          - generic [ref=e99]:
+            - generic [ref=e100]: 
+            - text: Status
+          - generic [ref=e101]: pending
+        - generic [ref=e102]:
+          - generic [ref=e103]:
+            - generic [ref=e104]: 
+            - text: Registration Fee
+          - generic [ref=e105]: Unpaid
+        - generic [ref=e106]:
+          - generic [ref=e107]:
+            - generic [ref=e108]: 
+            - text: Semester
+          - generic [ref=e109]: Unpaid
+        - generic [ref=e110]:
+          - generic [ref=e111]:
+            - generic [ref=e112]: 
+            - text: Events Attended
+          - generic [ref=e113]: "0"
+      - generic [ref=e114]:
+        - heading " Quick Actions" [level=4] [ref=e115]:
+          - generic [ref=e116]: 
+          - text: Quick Actions
+        - generic [ref=e117]:
+          - link " Pay Fees" [ref=e118] [cursor=pointer]:
+            - /url: /portal/membership
+            - generic [ref=e119]: 
+            - text: Pay Fees
+          - link " Resources" [ref=e120] [cursor=pointer]:
+            - /url: /portal/resources
+            - generic [ref=e121]: 
+            - text: Resources
+          - link " Vote" [ref=e122] [cursor=pointer]:
+            - /url: /portal/elections
+            - generic [ref=e123]: 
+            - text: Vote
+          - link " Check In" [ref=e124] [cursor=pointer]:
+            - /url: /portal/attendance
+            - generic [ref=e125]: 
+            - text: Check In
+      - generic [ref=e126]:
+        - heading " Latest Announcements" [level=4] [ref=e127]:
+          - generic [ref=e128]: 
+          - text: Latest Announcements
+        - generic [ref=e129]:
+          - generic [ref=e130]:
+            - strong [ref=e131]: Welcome to EESA Portal!
+            - generic [ref=e132]: High
+          - paragraph [ref=e133]: We are excited to launch the new EESA digital portal. Members can now register, pay fees, view events, and stay updated — all in one place. Sign up today!
+          - text: 2 Apr 2026
+        - generic [ref=e134]:
+          - generic [ref=e135]:
+            - strong [ref=e136]: Registration Fee Payment Deadline
+            - generic [ref=e137]: Urgent
+          - paragraph [ref=e138]: All new members must pay the KSh 100 registration fee by August 15th, 2025 to be verified. Use M-Pesa and submit your transaction code via the portal.
+          - text: 2 Apr 2026
+        - generic [ref=e139]:
+          - strong [ref=e141]: Semester Renewal Now Open
+          - paragraph [ref=e142]: Active members, please renew your membership for this semester. The renewal fee is KSh 50 via M-Pesa. Login to your portal to submit your payment code.
+          - text: 2 Apr 2026
