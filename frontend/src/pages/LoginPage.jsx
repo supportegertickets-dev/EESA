@@ -72,7 +72,7 @@ export default function LoginPage() {
           <form onSubmit={e => handleSubmit(e, 'member')}>
             <div className="form-group"><label>Email</label><input type="email" value={mEmail} onChange={e => setMEmail(e.target.value)} required placeholder="you@students.egerton.ac.ke" /></div>
             <div className="form-group"><label>Password</label><input type="password" value={mPass} onChange={e => setMPass(e.target.value)} required /></div>
-            <button type="submit" className="btn btn-primary btn-block btn-lg" disabled={submitting}><i className="fas fa-sign-in-alt"></i> {submitting ? 'Signing in...' : 'Sign In'}</button>
+            <button type="submit" className="btn btn-primary btn-block btn-lg" disabled={submitting}>{submitting ? <><i className="fas fa-spinner fa-spin"></i> Signing in...</> : <><i className="fas fa-sign-in-alt"></i> Sign In</>}</button>
             <p style={{ marginTop: 12, textAlign: 'center', fontSize: '.85rem', color: 'var(--gray-500)' }}>New member? <Link to="/register">Create an account</Link></p>
           </form>
         )}
@@ -82,7 +82,7 @@ export default function LoginPage() {
           <form onSubmit={e => handleSubmit(e, 'admin')}>
             <div className="form-group"><label>Username</label><input type="text" value={aUser} onChange={e => setAUser(e.target.value)} required placeholder="admin" /></div>
             <div className="form-group"><label>Password</label><input type="password" value={aPass} onChange={e => setAPass(e.target.value)} required /></div>
-            <button type="submit" className="btn btn-primary btn-block btn-lg" disabled={submitting}><i className="fas fa-sign-in-alt"></i> {submitting ? 'Signing in...' : 'Sign In'}</button>
+            <button type="submit" className="btn btn-primary btn-block btn-lg" disabled={submitting}>{submitting ? <><i className="fas fa-spinner fa-spin"></i> Signing in...</> : <><i className="fas fa-sign-in-alt"></i> Sign In</>}</button>
           </form>
         )}
 

@@ -133,7 +133,7 @@ export default function RegisterPage() {
           </div>
 
           <button type="submit" className="btn btn-primary btn-block btn-lg" disabled={submitting} style={{ marginTop: 8 }}>
-            <i className="fas fa-user-plus"></i> {submitting ? 'Creating account...' : 'Create Account'}
+            {submitting ? <><i className="fas fa-spinner fa-spin"></i> Creating account...</> : <><i className="fas fa-user-plus"></i> Create Account</>}
           </button>
 
           <p style={{ marginTop: 14, textAlign: 'center', fontSize: '.85rem', color: 'var(--gray-500)' }}>

@@ -123,7 +123,7 @@ export default function Membership() {
             <div className="form-group">
               <label>Payment Type</label>
               <select value={stkType} onChange={e => setStkType(e.target.value)}>
-                {!user.registrationPaid && <option value="registration">Registration Fee — KSh 100</option>}
+                {!user.registrationPaid && <option value="registration">Registration Fee — KSh 250</option>}
                 <option value="renewal">Semester Renewal — KSh 50</option>
               </select>
             </div>
@@ -133,7 +133,7 @@ export default function Membership() {
             </div>
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
               <button className="btn btn-primary" type="submit" disabled={stkSubmitting}>
-                <i className="fas fa-bolt"></i> {stkSubmitting ? 'Sending prompt...' : 'Pay via M-Pesa'}
+                {stkSubmitting ? <><i className="fas fa-spinner fa-spin"></i> Sending prompt...</> : <><i className="fas fa-bolt"></i> Pay via M-Pesa</>}
               </button>
               {stkPayment?._id && (
                 <button className="btn btn-outline" type="button" onClick={checkStkStatus}>

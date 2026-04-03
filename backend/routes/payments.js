@@ -40,7 +40,7 @@ router.post('/mpesa/stkpush', requireMember, async (req, res) => {
     const { type, phone } = req.body;
     if (!type || !phone) return res.status(400).json({ error: 'Payment type and phone number required' });
 
-    const amount = type === 'registration' ? 100 : 50;
+    const amount = type === 'registration' ? 250 : 50;
     // Normalize phone: 07xx → 2547xx
     let phoneNumber = phone.replace(/\s+/g, '');
     if (phoneNumber.startsWith('0')) phoneNumber = '254' + phoneNumber.slice(1);
@@ -181,7 +181,7 @@ router.post('/', requireMember, async (req, res) => {
     const { type, mpesaCode, semester } = req.body;
     if (!type || !mpesaCode) return res.status(400).json({ error: 'Payment type and M-Pesa code required' });
 
-    const amount = type === 'registration' ? 100 : 50;
+    const amount = type === 'registration' ? 250 : 50;
 
     // Prevent duplicate pending payments
     const existing = await Payment.findOne({ member: req.session.member.id, type, status: 'pending' });

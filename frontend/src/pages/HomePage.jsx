@@ -86,7 +86,7 @@ export default function HomePage() {
         <div className="container">
           <div className="section-header"><span className="section-tag">Showcase</span><h2>Featured Projects</h2></div>
           <div className="projects-grid react-data-grid">
-            {loading ? <div className="react-empty">Loading...</div> : fp.length ? fp.map(p => (
+            {loading ? <div className="react-empty"><i className="fas fa-spinner fa-spin"></i> Loading...</div> : fp.length ? fp.map(p => (
               <div className="project-card" key={p._id}>
                 <h3>{p.title}</h3>
                 <p>{(p.description || '').slice(0, 160)}</p>
