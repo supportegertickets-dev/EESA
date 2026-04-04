@@ -4,8 +4,10 @@
   "installCommand": "npm install --include=dev",
   "buildCommand": "npm run build",
   "outputDirectory": "frontend/dist",
-  "routes": [
-    { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "/index.html" }
+  "rewrites": [
+    {
+      "source": "/((?!assets/|css/|images/|favicon.ico|manifest.json|service-worker.js).*)",
+      "destination": "/index.html"
+    }
   ]
 }
