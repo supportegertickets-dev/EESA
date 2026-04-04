@@ -2,12 +2,10 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 
 const DEPARTMENTS = [
-  'Agricultural Engineering',
-  'Civil Engineering',
-  'Electrical & Electronic Engineering',
   'Mechanical Engineering',
-  'Mechatronic Engineering',
-  'Industrial & Energy Engineering',
+  'Electrical and Electronic Engineering',
+  'Civil Engineering',
+  'Agricultural Engineering',
 ];
 
 export default function RegisterPage() {

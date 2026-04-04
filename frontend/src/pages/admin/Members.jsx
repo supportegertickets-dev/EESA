@@ -53,8 +53,8 @@ export default function Members() {
         <input placeholder="Search name/reg no..." value={search} onChange={e => setSearch(e.target.value)} style={{ padding: '8px 12px', border: '2px solid var(--gray-300)', borderRadius: 'var(--radius-sm)', minWidth: 200 }} />
         <select value={dept} onChange={e => setDept(e.target.value)} style={{ padding: '8px 12px', border: '2px solid var(--gray-300)', borderRadius: 'var(--radius-sm)' }}>
           <option value="">All Departments</option>
-          <option>Computer Science</option><option>Mathematics</option><option>Physics</option>
-          <option>Engineering</option><option>Biological Sciences</option><option>Chemistry</option>
+          <option>Mechanical Engineering</option><option>Electrical and Electronic Engineering</option>
+          <option>Civil Engineering</option><option>Agricultural Engineering</option>
         </select>
         <select value={status} onChange={e => setStatus(e.target.value)} style={{ padding: '8px 12px', border: '2px solid var(--gray-300)', borderRadius: 'var(--radius-sm)' }}>
           <option value="">All Statuses</option><option>active</option><option>pending</option><option>suspended</option>

@@ -144,7 +144,7 @@ export default function Resources() {
         </select>
         <select style={{ padding: '8px 12px', border: '2px solid var(--gray-300)', borderRadius: 'var(--radius-sm)' }} value={department} onChange={e => setDepartment(e.target.value)}>
           <option value="">All Departments</option>
-          {['Electrical', 'Mechanical', 'Civil', 'Agricultural', 'Chemical'].map(d => <option key={d}>{d}</option>)}
+          {['Mechanical Engineering', 'Electrical and Electronic Engineering', 'Civil Engineering', 'Agricultural Engineering'].map(d => <option key={d}>{d}</option>)}
         </select>
         <input style={{ padding: '8px 12px', border: '2px solid var(--gray-300)', borderRadius: 'var(--radius-sm)', flex: 1, minWidth: 200 }} placeholder="Search resources..." value={search} onChange={e => setSearch(e.target.value)} />
       </div>
