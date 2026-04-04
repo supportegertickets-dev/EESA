@@ -46,27 +46,29 @@ export default function LoginPage() {
     }
   };
 
-  const roles = [
-    { key: 'member', label: 'Member' },
-    { key: 'admin', label: 'Admin' }
-  ];
+  const isAdminRoute = defaultRole === 'admin';
+  const roles = isAdminRoute
+    ? [{ key: 'admin', label: 'Admin' }]
+    : [{ key: 'member', label: 'Member' }];
 
   return (
     <div className="admin-login-screen" style={{ display: 'flex' }}>
       <div className="login-card">
         <div className="login-header">
           <img src="/images/eesa-logo.svg" alt="EESA" className="login-logo" />
-          <h2>EESA Portal</h2>
-          <p>Choose your portal access and sign in securely</p>
+          <h2>{isAdminRoute ? 'Admin Portal' : 'EESA Portal'}</h2>
+          <p>{isAdminRoute ? 'Sign in to the admin dashboard' : 'Sign in to access your account'}</p>
         </div>
 
-        <div className="login-tabs">
-          {roles.map(r => (
-            <button key={r.key} className={`login-tab ${activeRole === r.key ? 'active' : ''}`} onClick={() => { setActiveRole(r.key); setError(''); }}>
-              {r.label}
-            </button>
-          ))}
-        </div>
+        {roles.length > 1 && (
+          <div className="login-tabs">
+            {roles.map(r => (
+              <button key={r.key} className={`login-tab ${activeRole === r.key ? 'active' : ''}`} onClick={() => { setActiveRole(r.key); setError(''); }}>
+                {r.label}
+              </button>
+            ))}
+          </div>
+        )}
 
         {/* Member */}
         {activeRole === 'member' && (
