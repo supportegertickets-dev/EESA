@@ -23,7 +23,7 @@ export function AuthProvider({ children }) {
   const checkSession = useCallback(async () => {
     for (const [r, cfg] of Object.entries(ROLE_CONFIG)) {
       try {
-        const res = await fetch(cfg.checkUrl);
+        const res = await fetch(cfg.checkUrl, { credentials: 'include' });
         if (res.ok) {
           const data = await safeJson(res);
           if (data) {
@@ -44,13 +44,19 @@ export function AuthProvider({ children }) {
   const login = async (r, credentials) => {
     const cfg = ROLE_CONFIG[r];
     if (!cfg) throw new Error('Invalid role');
-    const res = await fetch(cfg.loginUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(credentials)
-    });
+    let res;
+    try {
+      res = await fetch(cfg.loginUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify(credentials)
+      });
+    } catch (err) {
+      throw new Error('Cannot reach the server — please check your connection');
+    }
     const data = await safeJson(res);
-    if (!res.ok) throw new Error((data && data.error) || 'Login failed');
+    if (!res.ok) throw new Error((data && data.error) || `Login failed (${res.status})`);
     if (!data) throw new Error('Server returned an empty response — please try again');
     // Detect actual role from response (admin may log in via member endpoint)
     const actualRole = data.admin ? 'admin' : data.lecturer ? 'lecturer' : data.sponsor ? 'sponsor' : r;
@@ -62,7 +68,7 @@ export function AuthProvider({ children }) {
 
   const logout = async () => {
     if (role && ROLE_CONFIG[role]) {
-      await fetch(ROLE_CONFIG[role].logoutUrl, { method: 'POST' }).catch(() => {});
+      await fetch(ROLE_CONFIG[role].logoutUrl, { method: 'POST', credentials: 'include' }).catch(() => {});
     }
     setUser(null);
     setRole(null);
