@@ -44,9 +44,9 @@ export default function AdminGallery() {
       if (editId) {
         const res = await fetch(`/api/gallery/${editId}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(form) });
         if (!res.ok) throw new Error((await res.json()).error);
-        toast.success('Photo updated');
+        toast('Photo updated', 'success');
       } else {
-        if (!files || files.length === 0) { toast.error('Select at least one image'); setSubmitting(false); return; }
+        if (!files || files.length === 0) { toast('Select at least one image', 'error'); setSubmitting(false); return; }
         const fd = new FormData();
         fd.append('title', form.title);
         fd.append('description', form.description);
@@ -54,11 +54,11 @@ export default function AdminGallery() {
         for (const f of files) fd.append('images', f);
         const res = await fetch('/api/gallery', { method: 'POST', body: fd });
         if (!res.ok) throw new Error((await res.json()).error);
-        toast.success('Photo(s) uploaded');
+        toast('Photo(s) uploaded', 'success');
       }
       setShowForm(false); setForm(EMPTY); setEditId(null); setFiles(null); load();
     } catch (err) {
-      toast.error(err.message);
+      toast(err.message, 'error');
     } finally {
       setSubmitting(false);
     }
@@ -77,11 +77,11 @@ export default function AdminGallery() {
       const res = await fetch(`/api/gallery/${id}`, { method: 'DELETE' });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data.error || 'Failed to delete photo');
-      toast.success('Photo deleted');
+      toast('Photo deleted', 'success');
       load();
     } catch (err) {
       setPhotos(previousPhotos);
-      toast.error(err.message);
+      toast(err.message, 'error');
     }
   };
 

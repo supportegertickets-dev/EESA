@@ -1,10 +1,12 @@
 const mongoose = require('mongoose');
 
 const candidateSchema = new mongoose.Schema({
-  member:    { type: mongoose.Schema.Types.ObjectId, ref: 'Member', required: true },
-  position:  { type: String, required: true },
-  manifesto: { type: String },
-  votes:     { type: Number, default: 0 },
+  member:        { type: mongoose.Schema.Types.ObjectId, ref: 'Member', required: true },
+  position:      { type: String, required: true, trim: true },
+  manifesto:     { type: String, trim: true },
+  imageUrl:      { type: String, trim: true },
+  imagePublicId: { type: String, trim: true },
+  votes:         { type: Number, default: 0 },
 });
 
 const electionSchema = new mongoose.Schema({
