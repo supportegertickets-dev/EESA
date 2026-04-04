@@ -5,5 +5,4 @@ eesa.db-wal
 uploads/*
 !uploads/.gitkeep
 .env
-dist/
 frontend/dist/
