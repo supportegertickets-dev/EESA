@@ -14,10 +14,19 @@ export default function Elections() {
   const [candForm, setCandForm] = useState({ memberId: '', position: '', manifesto: '' });
   const [members, setMembers] = useState([]);
 
-  const load = () => {
-    fetch('/api/elections').then(r => r.ok ? r.json() : []).then(d => { setElections(Array.isArray(d) ? d : []); setLoading(false); }).catch(() => setLoading(false));
+  const load = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch(`/api/elections?_ts=${Date.now()}`, { cache: 'no-store' });
+      const data = res.ok ? await res.json() : [];
+      setElections(Array.isArray(data) ? data : []);
+    } catch {
+      setElections([]);
+    } finally {
+      setLoading(false);
+    }
   };
-  useEffect(load, []);
+  useEffect(() => { load(); }, []);
 
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
 
@@ -37,8 +46,21 @@ export default function Elections() {
 
   const del = async (id) => {
     if (!window.confirm('Delete this election?')) return;
-    await fetch(`/api/elections/${id}`, { method: 'DELETE' });
-    toast('Deleted', 'success'); load();
+
+    const previous = elections;
+    setElections(current => current.filter(election => election._id !== id));
+    if (detail?._id === id) setDetail(null);
+
+    try {
+      const res = await fetch(`/api/elections/${id}`, { method: 'DELETE' });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || 'Failed to delete election');
+      toast('Deleted', 'success');
+      load();
+    } catch (err) {
+      setElections(previous);
+      toast(err.message, 'error');
+    }
   };
 
   const openDetail = (el) => {
@@ -59,9 +81,17 @@ export default function Elections() {
   };
 
   const removeCandidate = async (candId) => {
-    await fetch(`/api/elections/${detail._id}/candidates/${candId}`, { method: 'DELETE' });
-    const updated = await fetch(`/api/elections/${detail._id}`).then(r => r.json());
-    setDetail(updated); load();
+    try {
+      const res = await fetch(`/api/elections/${detail._id}/candidates/${candId}`, { method: 'DELETE' });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || 'Failed to remove candidate');
+      const updated = await fetch(`/api/elections/${detail._id}?_ts=${Date.now()}`, { cache: 'no-store' }).then(r => r.json());
+      setDetail(updated);
+      load();
+      toast('Candidate removed', 'success');
+    } catch (err) {
+      toast(err.message, 'error');
+    }
   };
 
   if (loading) return <Loading />;
@@ -110,7 +140,7 @@ export default function Elections() {
       )}
 
       {detail && (
-        <Modal title={`Candidates — ${detail.title}`} onClose={() => setDetail(null)}>
+        <Modal open={!!detail} title={`Candidates — ${detail.title}`} onClose={() => setDetail(null)}>
           {(detail.candidates || []).length === 0 ? <p>No candidates added yet.</p> : (
             <div style={{ marginBottom: 16 }}>
               {(detail.candidates || []).map(c => (

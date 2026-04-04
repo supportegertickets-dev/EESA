@@ -11,10 +11,19 @@ export default function Announcements() {
   const [form, setForm] = useState(EMPTY);
   const [editId, setEditId] = useState(null);
 
-  const load = () => {
-    fetch('/api/announcements').then(r => r.ok ? r.json() : []).then(d => { setItems(Array.isArray(d) ? d : []); setLoading(false); }).catch(() => setLoading(false));
+  const load = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch(`/api/announcements?_ts=${Date.now()}`, { cache: 'no-store' });
+      const data = res.ok ? await res.json() : [];
+      setItems(Array.isArray(data) ? data : []);
+    } catch {
+      setItems([]);
+    } finally {
+      setLoading(false);
+    }
   };
-  useEffect(load, []);
+  useEffect(() => { load(); }, []);
 
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
 
@@ -33,8 +42,20 @@ export default function Announcements() {
 
   const del = async (id) => {
     if (!window.confirm('Delete?')) return;
-    await fetch(`/api/announcements/${id}`, { method: 'DELETE' });
-    toast('Deleted', 'success'); load();
+
+    const previous = items;
+    setItems(current => current.filter(item => item._id !== id));
+
+    try {
+      const res = await fetch(`/api/announcements/${id}`, { method: 'DELETE' });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || 'Failed to delete announcement');
+      toast('Deleted', 'success');
+      load();
+    } catch (err) {
+      setItems(previous);
+      toast(err.message, 'error');
+    }
   };
 
   if (loading) return <Loading />;

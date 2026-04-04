@@ -10,14 +10,25 @@ export default function Members() {
   const [status, setStatus] = useState('');
   const [selected, setSelected] = useState(null);
 
-  const load = () => {
+  const load = async () => {
+    setLoading(true);
     const p = new URLSearchParams();
     if (search) p.set('search', search);
     if (dept) p.set('department', dept);
     if (status) p.set('status', status);
-    fetch(`/api/members?${p}`).then(r => r.ok ? r.json() : []).then(d => { setMembers(Array.isArray(d) ? d : d.members || []); setLoading(false); }).catch(() => setLoading(false));
+    p.set('_ts', Date.now().toString());
+
+    try {
+      const res = await fetch(`/api/members?${p.toString()}`, { cache: 'no-store' });
+      const data = res.ok ? await res.json() : [];
+      setMembers(Array.isArray(data) ? data : data.members || []);
+    } catch {
+      setMembers([]);
+    } finally {
+      setLoading(false);
+    }
   };
-  useEffect(() => { setLoading(true); load(); }, [search, dept, status]);
+  useEffect(() => { load(); }, [search, dept, status]);
 
   const verify = async (id) => {
     try {
@@ -37,11 +48,21 @@ export default function Members() {
 
   const deleteMember = async (id) => {
     if (!window.confirm('Delete this member permanently?')) return;
+
+    const previous = members;
+    setMembers(current => current.filter(member => member._id !== id));
+    if (selected?._id === id) setSelected(null);
+
     try {
       const res = await fetch(`/api/members/${id}`, { method: 'DELETE' });
-      if (!res.ok) throw new Error('Failed');
-      toast('Member deleted', 'success'); setSelected(null); load();
-    } catch (err) { toast(err.message, 'error'); }
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || 'Failed to delete member');
+      toast('Member deleted', 'success');
+      load();
+    } catch (err) {
+      setMembers(previous);
+      toast(err.message, 'error');
+    }
   };
 
   if (loading) return <Loading />;
@@ -89,7 +110,7 @@ export default function Members() {
       )}
 
       {selected && (
-        <Modal title={selected.fullName} onClose={() => setSelected(null)}>
+        <Modal open={!!selected} title={selected.fullName} onClose={() => setSelected(null)}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px 20px' }}>
             {[['Reg No', selected.regNumber || selected.registrationNumber], ['Email', selected.email], ['Phone', selected.phone], ['Department', selected.department], ['Year', selected.yearOfStudy], ['Gender', selected.gender], ['Status', selected.status], ['Verified', selected.isVerified ? 'Yes' : 'No'], ['Reg Fee', selected.registrationPaid ? 'Paid' : 'Unpaid'], ['Semester', selected.currentSemester || 'Unpaid'], ['Registered', fmtDt(selected.createdAt)]].map(([l, v]) => (
               <div key={l}><small style={{ color: 'var(--gray-500)' }}>{l}</small><div>{v || '--'}</div></div>

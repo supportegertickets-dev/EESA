@@ -12,10 +12,19 @@ export default function Sponsors() {
   const [editId, setEditId] = useState(null);
   const logoRef = useRef();
 
-  const load = () => {
-    fetch('/api/sponsors/all').then(r => r.ok ? r.json() : []).then(d => { setSponsors(Array.isArray(d) ? d : []); setLoading(false); }).catch(() => setLoading(false));
+  const load = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch(`/api/sponsors/all?_ts=${Date.now()}`, { cache: 'no-store' });
+      const data = res.ok ? await res.json() : [];
+      setSponsors(Array.isArray(data) ? data : []);
+    } catch {
+      setSponsors([]);
+    } finally {
+      setLoading(false);
+    }
   };
-  useEffect(load, []);
+  useEffect(() => { load(); }, []);
 
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
 
@@ -37,8 +46,20 @@ export default function Sponsors() {
 
   const del = async (id) => {
     if (!window.confirm('Delete this sponsor?')) return;
-    await fetch(`/api/sponsors/${id}`, { method: 'DELETE' });
-    toast('Deleted', 'success'); load();
+
+    const previous = sponsors;
+    setSponsors(current => current.filter(sponsor => sponsor._id !== id));
+
+    try {
+      const res = await fetch(`/api/sponsors/${id}`, { method: 'DELETE' });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || 'Failed to delete sponsor');
+      toast('Deleted', 'success');
+      load();
+    } catch (err) {
+      setSponsors(previous);
+      toast(err.message, 'error');
+    }
   };
 
   if (loading) return <Loading />;

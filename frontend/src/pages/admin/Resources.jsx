@@ -12,10 +12,19 @@ export default function Resources() {
   const [editId, setEditId] = useState(null);
   const fileRef = useRef();
 
-  const load = () => {
-    fetch('/api/resources').then(r => r.ok ? r.json() : []).then(d => { setResources(Array.isArray(d) ? d : []); setLoading(false); }).catch(() => setLoading(false));
+  const load = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch(`/api/resources?_ts=${Date.now()}`, { cache: 'no-store' });
+      const data = res.ok ? await res.json() : [];
+      setResources(Array.isArray(data) ? data : []);
+    } catch {
+      setResources([]);
+    } finally {
+      setLoading(false);
+    }
   };
-  useEffect(load, []);
+  useEffect(() => { load(); }, []);
 
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
 
@@ -37,8 +46,20 @@ export default function Resources() {
 
   const del = async (id) => {
     if (!window.confirm('Delete this resource?')) return;
-    await fetch(`/api/resources/${id}`, { method: 'DELETE' });
-    toast('Deleted', 'success'); load();
+
+    const previous = resources;
+    setResources(current => current.filter(resource => resource._id !== id));
+
+    try {
+      const res = await fetch(`/api/resources/${id}`, { method: 'DELETE' });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || 'Failed to delete resource');
+      toast('Deleted', 'success');
+      load();
+    } catch (err) {
+      setResources(previous);
+      toast(err.message, 'error');
+    }
   };
 
   const setApproval = async (id, approvalStatus) => {

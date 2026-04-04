@@ -14,10 +14,16 @@ export default function AdminAttendance() {
     fetch('/api/events').then(r => r.ok ? r.json() : []).then(d => { setEvents(Array.isArray(d) ? d : []); setLoading(false); }).catch(() => setLoading(false));
   }, []);
 
-  const loadRecords = (eventId) => {
+  const loadRecords = async (eventId) => {
     setSelectedEvent(eventId);
     if (!eventId) { setRecords([]); return; }
-    fetch(`/api/attendance/event/${eventId}`).then(r => r.ok ? r.json() : []).then(d => setRecords(Array.isArray(d) ? d : [])).catch(() => {});
+    try {
+      const res = await fetch(`/api/attendance/event/${eventId}?_ts=${Date.now()}`, { cache: 'no-store' });
+      const data = res.ok ? await res.json() : [];
+      setRecords(Array.isArray(data) ? data : []);
+    } catch {
+      setRecords([]);
+    }
   };
 
   const loadMembers = () => {
@@ -44,8 +50,19 @@ export default function AdminAttendance() {
   };
 
   const deleteRecord = async (id) => {
-    await fetch(`/api/attendance/${id}`, { method: 'DELETE' }).catch(() => {});
-    toast('Record deleted', 'success'); loadRecords(selectedEvent);
+    const previous = records;
+    setRecords(current => current.filter(record => record._id !== id));
+
+    try {
+      const res = await fetch(`/api/attendance/${id}`, { method: 'DELETE' });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || 'Failed to delete record');
+      toast('Record deleted', 'success');
+      loadRecords(selectedEvent);
+    } catch (err) {
+      setRecords(previous);
+      toast(err.message, 'error');
+    }
   };
 
   const toggleBulk = (id) => setBulkIds(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]);
