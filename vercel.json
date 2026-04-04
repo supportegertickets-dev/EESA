@@ -2,7 +2,7 @@
   "version": 2,
   "framework": null,
   "installCommand": "npm install --include=dev",
-  "buildCommand": "npm run build && mkdir -p dist && cp -r frontend/dist/* dist/",
+  "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "rewrites": [
     {
