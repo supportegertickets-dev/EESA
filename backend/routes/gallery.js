@@ -1,15 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Gallery = require('../models/Gallery');
+const { requireAdmin } = require('../middleware/auth');
 const { uploadImage, uploadToCloudinary, deleteFromCloudinary } = require('../middleware/upload');
-
-/* ── Helpers ─────────────────────────────────────── */
-function requireAdmin(req, res, next) {
-  if (!req.session.userId || req.session.role !== 'admin') {
-    return res.status(401).json({ error: 'Admin access required' });
-  }
-  next();
-}
 
 const ALLOWED_CATEGORIES = ['events', 'projects', 'campus', 'competitions', 'general'];
 
