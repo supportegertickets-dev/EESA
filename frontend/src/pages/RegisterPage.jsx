@@ -17,6 +17,7 @@ export default function RegisterPage() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [showPass, setShowPass] = useState(false);
 
   const set = (k) => (e) => setForm({ ...form, [k]: e.target.value });
 
@@ -122,11 +123,17 @@ export default function RegisterPage() {
           <div className="form-row">
             <div className="form-group">
               <label>Password <span style={{ color: 'var(--danger)' }}>*</span></label>
-              <input type="password" required value={form.password} onChange={set('password')} placeholder="Min 6 characters" />
+              <div style={{ position: 'relative' }}>
+                <input type={showPass ? 'text' : 'password'} required value={form.password} onChange={set('password')} placeholder="Min 6 characters" style={{ paddingRight: 40 }} />
+                <button type="button" onClick={() => setShowPass(s => !s)} style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--gray-500)', fontSize: '1rem' }}><i className={`fas ${showPass ? 'fa-eye-slash' : 'fa-eye'}`}></i></button>
+              </div>
             </div>
             <div className="form-group">
               <label>Confirm Password <span style={{ color: 'var(--danger)' }}>*</span></label>
-              <input type="password" required value={form.confirmPassword} onChange={set('confirmPassword')} placeholder="Re-enter password" />
+              <div style={{ position: 'relative' }}>
+                <input type={showPass ? 'text' : 'password'} required value={form.confirmPassword} onChange={set('confirmPassword')} placeholder="Re-enter password" style={{ paddingRight: 40 }} />
+                <button type="button" onClick={() => setShowPass(s => !s)} style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--gray-500)', fontSize: '1rem' }}><i className={`fas ${showPass ? 'fa-eye-slash' : 'fa-eye'}`}></i></button>
+              </div>
             </div>
           </div>
 

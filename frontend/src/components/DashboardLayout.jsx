@@ -11,6 +11,7 @@ const MEMBER_NAV = [
   { icon: 'fa-book', label: 'Resource Library', path: '/portal/resources' },
   { icon: 'fa-vote-yea', label: 'Elections & Voting', path: '/portal/elections' },
   { icon: 'fa-user-edit', label: 'My Profile', path: '/portal/profile' },
+  { icon: 'fa-images', label: 'Gallery', path: '/portal/gallery' },
 ];
 
 const ADMIN_NAV = [
@@ -24,6 +25,7 @@ const ADMIN_NAV = [
   { icon: 'fa-book', label: 'Resources', path: '/admin/resources' },
   { icon: 'fa-project-diagram', label: 'Projects', path: '/admin/projects' },
   { icon: 'fa-handshake', label: 'Sponsors', path: '/admin/sponsors' },
+  { icon: 'fa-images', label: 'Gallery', path: '/admin/gallery' },
 ];
 
 const LECTURER_NAV = [

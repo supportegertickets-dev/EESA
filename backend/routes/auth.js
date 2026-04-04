@@ -1,7 +1,9 @@
 const express = require('express');
+const crypto = require('crypto');
 const Admin = require('../models/Admin');
 const Member = require('../models/Member');
 const Lecturer = require('../models/Lecturer');
+const { sendPasswordResetEmail } = require('../utils/email');
 const router = express.Router();
 
 // ── Admin Login ──
@@ -118,6 +120,64 @@ router.post('/lecturer/logout', (req, res) => { req.session.destroy(); res.json(
 router.get('/lecturer/me', (req, res) => {
   if (req.session?.lecturer) return res.json(req.session.lecturer);
   res.status(401).json({ error: 'Not authenticated' });
+});
+
+// ── Forgot Password — send reset code ──
+router.post('/forgot-password', async (req, res) => {
+  try {
+    const { email } = req.body;
+    if (!email) return res.status(400).json({ error: 'Email is required' });
+
+    const member = await Member.findOne({ email: email.toLowerCase().trim() });
+    if (!member) {
+      // Don't reveal whether the email exists
+      return res.json({ message: 'If an account with that email exists, a reset code has been sent.' });
+    }
+
+    // Generate 6-digit code
+    const code = crypto.randomInt(100000, 999999).toString();
+    member.resetCode = code;
+    member.resetCodeExpiry = new Date(Date.now() + 15 * 60 * 1000); // 15 minutes
+    await member.save();
+
+    await sendPasswordResetEmail(member.email, member.fullName, code);
+
+    res.json({ message: 'If an account with that email exists, a reset code has been sent.' });
+  } catch (err) {
+    console.error('Forgot password error:', err.message);
+    res.status(500).json({ error: 'Failed to process request' });
+  }
+});
+
+// ── Reset Password — verify code and set new password ──
+router.post('/reset-password', async (req, res) => {
+  try {
+    const { email, code, newPassword } = req.body;
+    if (!email || !code || !newPassword)
+      return res.status(400).json({ error: 'Email, code, and new password are required' });
+    if (newPassword.length < 6)
+      return res.status(400).json({ error: 'Password must be at least 6 characters' });
+
+    const member = await Member.findOne({ email: email.toLowerCase().trim() });
+    if (!member || !member.resetCode || !member.resetCodeExpiry)
+      return res.status(400).json({ error: 'Invalid or expired reset code' });
+
+    if (member.resetCode !== code.trim())
+      return res.status(400).json({ error: 'Invalid reset code' });
+
+    if (new Date() > member.resetCodeExpiry)
+      return res.status(400).json({ error: 'Reset code has expired. Please request a new one.' });
+
+    member.password = newPassword;
+    member.resetCode = undefined;
+    member.resetCodeExpiry = undefined;
+    await member.save();
+
+    res.json({ message: 'Password reset successful! You can now sign in.' });
+  } catch (err) {
+    console.error('Reset password error:', err.message);
+    res.status(500).json({ error: 'Failed to reset password' });
+  }
 });
 
 module.exports = router;

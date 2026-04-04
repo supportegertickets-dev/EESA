@@ -28,6 +28,10 @@ const memberSchema = new mongoose.Schema({
   status: { type: String, enum: ['pending', 'active', 'suspended', 'inactive'], default: 'pending' },
   execPosition: { type: String, default: '' }, // e.g. 'Chairperson', 'Secretary' — set by admin
   profilePhoto: String,
+
+  // Password reset
+  resetCode:      { type: String },
+  resetCodeExpiry: { type: Date },
 }, { timestamps: true });
 
 memberSchema.pre('save', async function(next) {

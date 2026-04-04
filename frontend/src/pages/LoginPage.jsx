@@ -19,6 +19,7 @@ export default function LoginPage() {
   const [activeRole, setActiveRole] = useState(defaultRole);
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [showPass, setShowPass] = useState(false);
 
   /* form fields */
   const [mEmail, setMEmail] = useState('');
@@ -71,9 +72,17 @@ export default function LoginPage() {
         {activeRole === 'member' && (
           <form onSubmit={e => handleSubmit(e, 'member')}>
             <div className="form-group"><label>Email</label><input type="email" value={mEmail} onChange={e => setMEmail(e.target.value)} required placeholder="you@students.egerton.ac.ke" /></div>
-            <div className="form-group"><label>Password</label><input type="password" value={mPass} onChange={e => setMPass(e.target.value)} required /></div>
+            <div className="form-group"><label>Password</label>
+              <div style={{ position: 'relative' }}>
+                <input type={showPass ? 'text' : 'password'} value={mPass} onChange={e => setMPass(e.target.value)} required style={{ paddingRight: 40 }} />
+                <button type="button" onClick={() => setShowPass(s => !s)} style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--gray-500)', fontSize: '1rem' }}><i className={`fas ${showPass ? 'fa-eye-slash' : 'fa-eye'}`}></i></button>
+              </div>
+            </div>
             <button type="submit" className="btn btn-primary btn-block btn-lg" disabled={submitting}>{submitting ? <><i className="fas fa-spinner fa-spin"></i> Signing in...</> : <><i className="fas fa-sign-in-alt"></i> Sign In</>}</button>
-            <p style={{ marginTop: 12, textAlign: 'center', fontSize: '.85rem', color: 'var(--gray-500)' }}>New member? <Link to="/register">Create an account</Link></p>
+            <div style={{ marginTop: 12, textAlign: 'center', fontSize: '.85rem', color: 'var(--gray-500)', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 4 }}>
+              <Link to="/forgot-password">Forgot password?</Link>
+              <span>New member? <Link to="/register">Create an account</Link></span>
+            </div>
           </form>
         )}
 
@@ -81,7 +90,12 @@ export default function LoginPage() {
         {activeRole === 'admin' && (
           <form onSubmit={e => handleSubmit(e, 'admin')}>
             <div className="form-group"><label>Username</label><input type="text" value={aUser} onChange={e => setAUser(e.target.value)} required placeholder="admin" /></div>
-            <div className="form-group"><label>Password</label><input type="password" value={aPass} onChange={e => setAPass(e.target.value)} required /></div>
+            <div className="form-group"><label>Password</label>
+              <div style={{ position: 'relative' }}>
+                <input type={showPass ? 'text' : 'password'} value={aPass} onChange={e => setAPass(e.target.value)} required style={{ paddingRight: 40 }} />
+                <button type="button" onClick={() => setShowPass(s => !s)} style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--gray-500)', fontSize: '1rem' }}><i className={`fas ${showPass ? 'fa-eye-slash' : 'fa-eye'}`}></i></button>
+              </div>
+            </div>
             <button type="submit" className="btn btn-primary btn-block btn-lg" disabled={submitting}>{submitting ? <><i className="fas fa-spinner fa-spin"></i> Signing in...</> : <><i className="fas fa-sign-in-alt"></i> Sign In</>}</button>
           </form>
         )}

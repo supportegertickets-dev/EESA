@@ -4,7 +4,9 @@
  */
 const multer = require('multer');
 const { v2: cloudinary } = require('cloudinary');
-const { Readable } = require('stream');
+const os = require('os');
+const fs = require('fs');
+const path = require('path');
 
 // Configure Cloudinary
 cloudinary.config({
@@ -53,22 +55,23 @@ const uploadImage = multer({
  * @returns {Promise<{url, publicId, format, size}>}
  */
 async function uploadToCloudinary(buffer, folder = 'eesa', resourceType = 'auto') {
-  return new Promise((resolve, reject) => {
-    const uploadStream = cloudinary.uploader.upload_stream(
-      { folder, resource_type: resourceType, allowed_formats: null },
-      (error, result) => {
-        if (error) return reject(error);
-        resolve({
-          url: result.secure_url,
-          publicId: result.public_id,
-          format: result.format,
-          size: result.bytes
-        });
-      }
-    );
-    const readable = Readable.from(buffer);
-    readable.pipe(uploadStream);
-  });
+  // Write buffer to a temp file to avoid base64 display-name length limits
+  const tmp = path.join(os.tmpdir(), `eesa-upload-${Date.now()}`);
+  fs.writeFileSync(tmp, buffer);
+  try {
+    const result = await cloudinary.uploader.unsigned_upload(tmp, 'EESA-Gallery', {
+      folder,
+      resource_type: resourceType
+    });
+    return {
+      url: result.secure_url,
+      publicId: result.public_id,
+      format: result.format,
+      size: result.bytes
+    };
+  } finally {
+    fs.unlink(tmp, () => {});
+  }
 }
 
 /**

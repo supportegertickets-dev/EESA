@@ -104,6 +104,7 @@ app.use('/api/admin', require('./routes/admin'));
 app.use('/api/units', require('./routes/units'));
 app.use('/api/notifications', require('./routes/notifications'));
 app.use('/api/upload', require('./routes/upload'));
+app.use('/api/gallery', require('./routes/gallery'));
 
 // Legacy page routes used by the React dashboard loader
 app.get('/legacy/admin*', (req, res) => res.sendFile(path.join(publicPath, 'admin.html')));

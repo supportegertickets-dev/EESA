@@ -12,6 +12,7 @@
     "seed": "node backend/seed.js"
   },
   "dependencies": {
+    "@getbrevo/brevo": "^5.0.3",
     "@vitejs/plugin-react": "^4.3.4",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^2.9.0",

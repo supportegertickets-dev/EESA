@@ -7,6 +7,7 @@ import DashboardLayout from './components/DashboardLayout';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+import ForgotPasswordPage from './pages/ForgotPasswordPage';
 
 /* Member */
 import MemberDashboard from './pages/member/Dashboard';
@@ -16,6 +17,7 @@ import MemberElections from './pages/member/Elections';
 import MemberEvents from './pages/member/Events';
 import MemberAnnouncements from './pages/member/Announcements';
 import Profile from './pages/member/Profile';
+import MemberGallery from './pages/member/Gallery';
 
 /* Admin */
 import AdminDashboard from './pages/admin/Dashboard';
@@ -28,6 +30,7 @@ import AdminResources from './pages/admin/Resources';
 import AdminAnnouncements from './pages/admin/Announcements';
 import AdminProjects from './pages/admin/Projects';
 import AdminSponsors from './pages/admin/Sponsors';
+import AdminGallery from './pages/admin/Gallery';
 
 /* Lecturer */
 import LecturerDashboard from './pages/lecturer/Dashboard';
@@ -70,6 +73,7 @@ export default function App() {
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/login/:role" element={<LoginPage />} />
+      <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       <Route path="/dashboard" element={<LoginPage />} />
 
       {/* Member portal */}
@@ -81,6 +85,7 @@ export default function App() {
         <Route path="events" element={<MemberEvents />} />
         <Route path="announcements" element={<MemberAnnouncements />} />
         <Route path="profile" element={<Profile />} />
+        <Route path="gallery" element={<MemberGallery />} />
       </Route>
 
       {/* Admin panel */}
@@ -95,6 +100,7 @@ export default function App() {
         <Route path="announcements" element={<AdminAnnouncements />} />
         <Route path="projects" element={<AdminProjects />} />
         <Route path="sponsors" element={<AdminSponsors />} />
+        <Route path="gallery" element={<AdminGallery />} />
       </Route>
 
       {/* Lecturer portal */}
