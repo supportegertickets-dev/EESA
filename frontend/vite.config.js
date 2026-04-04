@@ -22,7 +22,7 @@ module.exports = defineConfig({
     }
   },
   build: {
-    outDir: path.resolve(__dirname, '..', 'dist'),
+    outDir: 'dist',
     emptyOutDir: true
   }
 });
