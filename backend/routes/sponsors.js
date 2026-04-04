@@ -116,7 +116,17 @@ router.post('/', requireAdmin, uploadImage.single('logo'), async (req, res) => {
 // Admin: update
 router.put('/:id', requireAdmin, async (req, res) => {
   try {
-    const sponsor = await Sponsor.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const allowed = ['name', 'website', 'description', 'tier', 'isActive', 'startDate', 'endDate', 'contactPerson', 'phone', 'amount', 'email'];
+    const update = {};
+    for (const key of allowed) { if (req.body[key] !== undefined) update[key] = req.body[key]; }
+    if (typeof update.isActive === 'string') update.isActive = update.isActive === 'true';
+    // Handle password separately — only update if provided
+    if (req.body.password && req.body.password.trim()) {
+      const bcrypt = require('bcryptjs');
+      update.password = await bcrypt.hash(req.body.password.trim(), 10);
+    }
+    const sponsor = await Sponsor.findByIdAndUpdate(req.params.id, update, { new: true });
+    if (!sponsor) return res.status(404).json({ error: 'Sponsor not found' });
     res.json(sponsor);
   } catch { res.status(500).json({ error: 'Failed to update' }); }
 });

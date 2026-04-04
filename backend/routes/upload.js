@@ -42,10 +42,13 @@ router.get('/directory', requireMember, async (req, res) => {
     const filter = { status: 'active', isVerified: true };
     if (department) filter.department = department;
     if (year) filter.yearOfStudy = Number(year);
-    if (search) filter.$or = [
-      { fullName: { $regex: search, $options: 'i' } },
-      { regNumber: { $regex: search, $options: 'i' } }
-    ];
+    if (search) {
+      const safe = search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      filter.$or = [
+        { fullName: { $regex: safe, $options: 'i' } },
+        { regNumber: { $regex: safe, $options: 'i' } }
+      ];
+    }
     const members = await Member.find(filter)
       .select('fullName regNumber department yearOfStudy gender profilePhoto execPosition')
       .sort({ fullName: 1 });

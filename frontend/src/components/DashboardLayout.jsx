@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
+import { Link, NavLink, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 /* ── Nav configs per role ───────────────────────── */
@@ -42,6 +42,7 @@ const ICON_MAP = { member: 'fa-user-circle', admin: 'fa-user-shield', lecturer: 
 export default function DashboardLayout() {
   const { user, role, logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('eesa-dark') === '1');
   const [notifs, setNotifs] = useState([]);
@@ -65,6 +66,8 @@ export default function DashboardLayout() {
   const unreadCount = notifs.filter(n => !n.read).length;
   const nav = NAV_MAP[role] || [];
   const brand = BRAND_MAP[role] || 'EESA Portal';
+  const currentNav = nav.find(n => n.path === location.pathname) || nav[0];
+  const pageTitle = currentNav?.label || 'Dashboard';
 
   const handleLogout = async () => {
     await logout();
@@ -130,7 +133,7 @@ export default function DashboardLayout() {
           <button className="menu-toggle" onClick={() => setSidebarOpen(o => !o)}>
             <i className="fas fa-bars"></i>
           </button>
-          <h2 className="page-title">Dashboard</h2>
+          <h2 className="page-title">{pageTitle}</h2>
           <div className="topbar-actions">
             {role === 'member' && (
               <div className="notification-bell" onClick={() => setNotifOpen(o => !o)} style={{ position: 'relative' }}>

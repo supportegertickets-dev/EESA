@@ -20,14 +20,20 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', requireAdmin, async (req, res) => {
   try {
-    const item = await Announcement.create({ ...req.body, createdBy: req.session.admin.id });
+    const { title, content, priority, targetAudience, isPinned } = req.body;
+    if (!title || !content) return res.status(400).json({ error: 'Title and content are required' });
+    const item = await Announcement.create({ title, content, priority, targetAudience, isPinned, createdBy: req.session.admin.id });
     res.status(201).json(item);
   } catch { res.status(500).json({ error: 'Failed to create announcement' }); }
 });
 
 router.put('/:id', requireAdmin, async (req, res) => {
   try {
-    const item = await Announcement.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const allowed = ['title', 'content', 'priority', 'targetAudience', 'isPinned'];
+    const update = {};
+    for (const key of allowed) { if (req.body[key] !== undefined) update[key] = req.body[key]; }
+    const item = await Announcement.findByIdAndUpdate(req.params.id, update, { new: true });
+    if (!item) return res.status(404).json({ error: 'Announcement not found' });
     res.json(item);
   } catch { res.status(500).json({ error: 'Failed to update' }); }
 });

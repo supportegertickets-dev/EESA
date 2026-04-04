@@ -36,7 +36,7 @@ export default function LoginPage() {
       else if (role === 'admin') creds = { username: aUser, password: aPass };
       else creds = { email: mEmail, password: mPass };
       await login(role, creds);
-      const dest = role === 'member' ? '/portal' : '/admin';
+      const dest = { member: '/portal', admin: '/admin', lecturer: '/lecturer', sponsor: '/sponsor' }[role] || '/portal';
       navigate(dest);
     } catch (err) {
       setError(err.message);

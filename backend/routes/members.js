@@ -20,16 +20,21 @@ router.put('/me/password', requireMember, async (req, res) => {
   } catch { res.status(500).json({ error: 'Failed to change password' }); }
 });
 
+function escapeRegex(str) { return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+
 // Get all members (admin)
 router.get('/', requireAdmin, async (req, res) => {
   try {
     const { search, department, year, status } = req.query;
     const filter = {};
-    if (search) filter.$or = [
-      { fullName: { $regex: search, $options: 'i' } },
-      { regNumber: { $regex: search, $options: 'i' } },
-      { email: { $regex: search, $options: 'i' } }
-    ];
+    if (search) {
+      const safe = escapeRegex(search);
+      filter.$or = [
+        { fullName: { $regex: safe, $options: 'i' } },
+        { regNumber: { $regex: safe, $options: 'i' } },
+        { email: { $regex: safe, $options: 'i' } }
+      ];
+    }
     if (department) filter.department = department;
     if (year) filter.yearOfStudy = Number(year);
     if (status) filter.status = status;
@@ -66,7 +71,10 @@ router.put('/:id/verify', requireAdmin, async (req, res) => {
 router.put('/:id/status', requireAdmin, async (req, res) => {
   try {
     const { status } = req.body;
+    const allowed = ['pending', 'active', 'suspended', 'inactive'];
+    if (!status || !allowed.includes(status)) return res.status(400).json({ error: 'Invalid status. Must be: ' + allowed.join(', ') });
     const member = await Member.findByIdAndUpdate(req.params.id, { status }, { new: true }).select('-password');
+    if (!member) return res.status(404).json({ error: 'Member not found' });
     res.json(member);
   } catch { res.status(500).json({ error: 'Update failed' }); }
 });

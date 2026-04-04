@@ -25,14 +25,20 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', requireAdmin, async (req, res) => {
   try {
-    const event = await Event.create({ ...req.body, createdBy: req.session.admin.id });
+    const { title, description, date, location, category, status, maxParticipants } = req.body;
+    if (!title || !date) return res.status(400).json({ error: 'Title and date are required' });
+    const event = await Event.create({ title, description, date, location, category, status, maxParticipants, createdBy: req.session.admin.id });
     res.status(201).json(event);
   } catch { res.status(500).json({ error: 'Failed to create event' }); }
 });
 
 router.put('/:id', requireAdmin, async (req, res) => {
   try {
-    const event = await Event.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const allowed = ['title', 'description', 'date', 'location', 'category', 'status', 'maxParticipants'];
+    const update = {};
+    for (const key of allowed) { if (req.body[key] !== undefined) update[key] = req.body[key]; }
+    const event = await Event.findByIdAndUpdate(req.params.id, update, { new: true });
+    if (!event) return res.status(404).json({ error: 'Event not found' });
     res.json(event);
   } catch { res.status(500).json({ error: 'Failed to update event' }); }
 });

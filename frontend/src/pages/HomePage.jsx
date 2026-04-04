@@ -158,7 +158,7 @@ export default function HomePage() {
             <Link to="/login" className="btn btn-outline-light btn-lg"><i className="fas fa-sign-in-alt"></i> Sign In</Link>
           </div>
           <p style={{ marginTop: 12, textAlign: 'center', color: 'rgba(255,255,255,0.85)', fontSize: '.9rem' }}>
-            Admin, lecturer, and sponsor access is available from the login page tabs.
+            Admin access is available from the login page.
           </p>
         </div>
       </section>

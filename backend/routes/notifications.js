@@ -27,8 +27,15 @@ router.get('/', async (req, res) => {
 // Mark one as read
 router.put('/:id/read', async (req, res) => {
   try {
+    let recipientId;
+    if (req.session?.member) recipientId = req.session.member.id;
+    else if (req.session?.lecturer) recipientId = req.session.lecturer.id;
+    else if (req.session?.admin) recipientId = req.session.admin.id;
+    else return res.status(401).json({ error: 'Login required' });
+
     const notif = await Notification.findById(req.params.id);
     if (!notif) return res.status(404).json({ error: 'Not found' });
+    if (notif.recipient.toString() !== recipientId) return res.status(403).json({ error: 'Not your notification' });
     notif.read = true;
     notif.readAt = new Date();
     await notif.save();
@@ -85,6 +92,15 @@ router.post('/', requireAdmin, async (req, res) => {
 // Delete notification
 router.delete('/:id', async (req, res) => {
   try {
+    let recipientId;
+    if (req.session?.member) recipientId = req.session.member.id;
+    else if (req.session?.lecturer) recipientId = req.session.lecturer.id;
+    else if (req.session?.admin) recipientId = req.session.admin.id;
+    else return res.status(401).json({ error: 'Login required' });
+
+    const notif = await Notification.findById(req.params.id);
+    if (!notif) return res.status(404).json({ error: 'Not found' });
+    if (notif.recipient.toString() !== recipientId) return res.status(403).json({ error: 'Not your notification' });
     await Notification.findByIdAndDelete(req.params.id);
     res.json({ message: 'Deleted' });
   } catch { res.status(500).json({ error: 'Failed' }); }

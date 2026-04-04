@@ -13,7 +13,7 @@ const memberSchema = new mongoose.Schema({
   
   // Verification & Payment
   isVerified:       { type: Boolean, default: false },
-  registrationFee:  { type: Number, default: 100 }, // KSh registration fee
+  registrationFee:  { type: Number, default: 250 }, // KSh registration fee
   registrationPaid: { type: Boolean, default: false },
   
   // Semester renewal

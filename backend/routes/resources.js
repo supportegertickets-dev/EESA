@@ -25,12 +25,15 @@ router.get('/', requireMemberOrAdmin, async (req, res) => {
     if (category) clauses.push({ category });
     if (department) clauses.push({ department });
     if (year) clauses.push({ yearOfStudy: Number(year) });
-    if (search) clauses.push({
-      $or: [
-        { title: { $regex: search, $options: 'i' } },
-        { description: { $regex: search, $options: 'i' } }
-      ]
-    });
+    if (search) {
+      const safe = search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      clauses.push({
+        $or: [
+          { title: { $regex: safe, $options: 'i' } },
+          { description: { $regex: safe, $options: 'i' } }
+        ]
+      });
+    }
     if (req.session?.member) {
       clauses.push({
         $or: [
@@ -51,8 +54,9 @@ router.get('/', requireMemberOrAdmin, async (req, res) => {
 // Member: submit a resource for admin review
 router.post('/submit', requireMember, upload.single('file'), async (req, res) => {
   try {
+    const { title, description, category, department, yearOfStudy, externalLink } = req.body;
     const data = {
-      ...req.body,
+      title, description, category, department, yearOfStudy, externalLink,
       uploadedByMember: req.session.member.id,
       submittedByName: req.session.member.fullName,
       submittedByRole: 'Member',
@@ -92,12 +96,13 @@ router.post('/:id/download', requireMember, async (req, res) => {
 // Admin: create resource
 router.post('/', requireAdmin, upload.single('file'), async (req, res) => {
   try {
+    const { title, description, category, department, yearOfStudy, externalLink, isPublic, approvalStatus } = req.body;
     const data = {
-      ...req.body,
+      title, description, category, department, yearOfStudy, externalLink,
       uploadedBy: req.session.admin.id,
       submittedByName: req.session.admin.fullName || req.session.admin.username,
       submittedByRole: 'Admin',
-      approvalStatus: req.body.approvalStatus || 'approved'
+      approvalStatus: approvalStatus || 'approved'
     };
     if (req.file) {
       const result = await uploadToCloudinary(req.file.buffer, 'eesa/resources');
@@ -115,7 +120,9 @@ router.post('/', requireAdmin, upload.single('file'), async (req, res) => {
 // Admin: update
 router.put('/:id', requireAdmin, upload.single('file'), async (req, res) => {
   try {
-    const data = { ...req.body };
+    const allowed = ['title', 'description', 'category', 'department', 'yearOfStudy', 'externalLink', 'isPublic', 'approvalStatus'];
+    const data = {};
+    for (const key of allowed) { if (req.body[key] !== undefined) data[key] = req.body[key]; }
     if (req.file) {
       const result = await uploadToCloudinary(req.file.buffer, 'eesa/resources');
       data.fileUrl = result.url;

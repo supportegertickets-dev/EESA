@@ -23,14 +23,20 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', requireAdmin, async (req, res) => {
   try {
-    const p = await Project.create({ ...req.body, createdBy: req.session.admin.id });
+    const { title, description, category, status, teamLead, startDate, endDate } = req.body;
+    if (!title) return res.status(400).json({ error: 'Project title is required' });
+    const p = await Project.create({ title, description, category, status, teamLead, startDate, endDate, createdBy: req.session.admin.id });
     res.status(201).json(p);
   } catch { res.status(500).json({ error: 'Failed to create project' }); }
 });
 
 router.put('/:id', requireAdmin, async (req, res) => {
   try {
-    const p = await Project.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const allowed = ['title', 'description', 'category', 'status', 'teamLead', 'startDate', 'endDate'];
+    const update = {};
+    for (const key of allowed) { if (req.body[key] !== undefined) update[key] = req.body[key]; }
+    const p = await Project.findByIdAndUpdate(req.params.id, update, { new: true });
+    if (!p) return res.status(404).json({ error: 'Project not found' });
     res.json(p);
   } catch { res.status(500).json({ error: 'Failed to update' }); }
 });
