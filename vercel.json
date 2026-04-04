@@ -1,5 +1,7 @@
 {
-  "buildCommand": "",
+  "framework": null,
+  "installCommand": "npm install",
+  "buildCommand": "npx vite build --config frontend/vite.config.js",
   "outputDirectory": "dist",
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
