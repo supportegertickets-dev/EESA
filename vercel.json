@@ -2,8 +2,8 @@
   "version": 2,
   "framework": null,
   "installCommand": "npm install --include=dev",
-  "buildCommand": "npm run build",
-  "outputDirectory": "frontend/dist",
+  "buildCommand": "npm run build && rm -rf dist && mv frontend/dist dist",
+  "outputDirectory": "dist",
   "rewrites": [
     {
       "source": "/((?!assets/|css/|images/|favicon.ico|manifest.json|service-worker.js).*)",
