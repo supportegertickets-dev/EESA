@@ -36,8 +36,8 @@ export default function LoginPage() {
       if (role === 'member') creds = { email: mEmail, password: mPass };
       else if (role === 'admin') creds = { username: aUser, password: aPass };
       else creds = { email: mEmail, password: mPass };
-      await login(role, creds);
-      const dest = { member: '/portal', admin: '/admin', lecturer: '/lecturer', sponsor: '/sponsor' }[role] || '/portal';
+      const result = await login(role, creds);
+      const dest = result.redirectTo || { member: '/portal', admin: '/admin', lecturer: '/lecturer', sponsor: '/sponsor' }[result.role] || '/portal';
       navigate(dest);
     } catch (err) {
       setError(err.message);
@@ -73,7 +73,7 @@ export default function LoginPage() {
         {/* Member */}
         {activeRole === 'member' && (
           <form onSubmit={e => handleSubmit(e, 'member')}>
-            <div className="form-group"><label>Email</label><input type="email" value={mEmail} onChange={e => setMEmail(e.target.value)} required placeholder="you@students.egerton.ac.ke" /></div>
+            <div className="form-group"><label>Email or Username</label><input type="text" value={mEmail} onChange={e => setMEmail(e.target.value)} required placeholder="you@students.egerton.ac.ke or username" /></div>
             <div className="form-group"><label>Password</label>
               <div style={{ position: 'relative' }}>
                 <input type={showPass ? 'text' : 'password'} value={mPass} onChange={e => setMPass(e.target.value)} required style={{ paddingRight: 40 }} />

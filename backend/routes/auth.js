@@ -50,22 +50,31 @@ router.post('/member/register', async (req, res) => {
   }
 });
 
-// ── Member Login ──
+// ── Member Login (also allows admin login by username) ──
 router.post('/member/login', async (req, res) => {
   try {
     const { email, password } = req.body;
-    if (!email || !password) return res.status(400).json({ error: 'Email and password required' });
+    if (!email || !password) return res.status(400).json({ error: 'Email/username and password required' });
 
+    // Try member first
     const member = await Member.findOne({ email });
-    if (!member || !(await member.comparePassword(password)))
-      return res.status(401).json({ error: 'Invalid email or password' });
+    if (member && (await member.comparePassword(password))) {
+      req.session.member = {
+        id: member._id, fullName: member.fullName, email: member.email,
+        isVerified: member.isVerified, status: member.status, regNumber: member.regNumber,
+        department: member.department, yearOfStudy: member.yearOfStudy
+      };
+      return res.json({ message: 'Login successful', member: member.toPublic() });
+    }
 
-    req.session.member = {
-      id: member._id, fullName: member.fullName, email: member.email,
-      isVerified: member.isVerified, status: member.status, regNumber: member.regNumber,
-      department: member.department, yearOfStudy: member.yearOfStudy
-    };
-    res.json({ message: 'Login successful', member: member.toPublic() });
+    // Fallback: try admin by username
+    const admin = await Admin.findOne({ username: email });
+    if (admin && (await admin.comparePassword(password))) {
+      req.session.admin = { id: admin._id, username: admin.username, fullName: admin.fullName, role: admin.role };
+      return res.json({ message: 'Login successful', admin: req.session.admin, redirectTo: '/admin' });
+    }
+
+    return res.status(401).json({ error: 'Invalid email/username or password' });
   } catch (err) { res.status(500).json({ error: 'Server error' }); }
 });
 

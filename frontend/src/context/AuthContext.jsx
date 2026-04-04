@@ -43,10 +43,12 @@ export function AuthProvider({ children }) {
     });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || 'Login failed');
+    // Detect actual role from response (admin may log in via member endpoint)
+    const actualRole = data.admin ? 'admin' : data.lecturer ? 'lecturer' : data.sponsor ? 'sponsor' : r;
     const u = data.member || data.admin || data.lecturer || data.sponsor || data;
     setUser(u);
-    setRole(r);
-    return u;
+    setRole(actualRole);
+    return { user: u, role: actualRole, redirectTo: data.redirectTo };
   };
 
   const logout = async () => {
