@@ -85,7 +85,8 @@ router.delete('/:id', requireAdmin, async (req, res) => {
   try {
     const photo = await Gallery.findByIdAndDelete(req.params.id);
     if (!photo) return res.status(404).json({ error: 'Photo not found' });
-    await deleteFromCloudinary(photo.publicId, 'image');
+    // Best-effort Cloudinary cleanup — don't fail if it errors
+    try { await deleteFromCloudinary(photo.publicId, 'image'); } catch (_) {}
     res.json({ message: 'Photo deleted' });
   } catch (err) {
     res.status(500).json({ error: err.message });
