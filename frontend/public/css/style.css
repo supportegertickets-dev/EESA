@@ -1392,3 +1392,13 @@ body.dark-mode .topbar { background: rgba(22,22,58,.85); }
   }
   .reveal, .reveal-left, .reveal-right, .reveal-scale { opacity: 1; transform: none; }
 }
+
+/* -- SoE section responsive -- */
+@media (max-width: 768px) {
+  .soe-layout { grid-template-columns: 1fr !important; }
+  .soe-depts { grid-template-columns: 1fr !important; }
+  .soe-cards { grid-template-columns: 1fr 1fr !important; }
+}
+@media (max-width: 480px) {
+  .soe-cards { grid-template-columns: 1fr !important; }
+}

@@ -52,7 +52,7 @@ export default function HomePage() {
             <i className={menuOpen ? 'fas fa-times' : 'fas fa-bars'}></i>
           </button>
           <div className={`nav-links${menuOpen ? ' open' : ''}`}>
-            <a href="#projects" onClick={() => setMenuOpen(false)}>Projects</a><a href="#news" onClick={() => setMenuOpen(false)}>News</a><a href="#sponsors" onClick={() => setMenuOpen(false)}>Sponsors</a><a href="#contact" onClick={() => setMenuOpen(false)}>Contact</a>
+            <a href="#soe" onClick={() => setMenuOpen(false)}>School</a><a href="#projects" onClick={() => setMenuOpen(false)}>Projects</a><a href="#news" onClick={() => setMenuOpen(false)}>News</a><a href="#sponsors" onClick={() => setMenuOpen(false)}>Sponsors</a><a href="#contact" onClick={() => setMenuOpen(false)}>Contact</a>
           </div>
           <div className="react-navbar-actions">
             <Link to="/register" className="btn btn-primary">Join EESA</Link>
@@ -77,6 +77,63 @@ export default function HomePage() {
             <div className="hero-stat"><span className="stat-number">{events.length}</span><span className="stat-label">Events</span></div>
             <div className="hero-stat"><span className="stat-number">{announcements.length}</span><span className="stat-label">Updates</span></div>
             <div className="hero-stat"><span className="stat-number">{sponsors.length}</span><span className="stat-label">Sponsors</span></div>
+          </div>
+        </div>
+      </section>
+
+      {/* School of Engineering */}
+      <section className="section section-alt" id="soe">
+        <div className="container">
+          <div className="section-header">
+            <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: '2.2rem', color: '#800020' }}>School of Engineering</h2>
+            <div style={{ width: 60, height: 4, background: '#800020', margin: '12px auto 16px' }}></div>
+            <p style={{ maxWidth: 700, margin: '0 auto', color: '#555' }}>
+              Egerton University's School of Engineering is a center of excellence in engineering education, research, and innovation in East Africa.
+            </p>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2.5rem', marginTop: '2rem', alignItems: 'start' }} className="soe-layout">
+            {/* Left: Description + Departments */}
+            <div>
+              <h3 style={{ fontSize: '1.35rem', fontWeight: 700, marginBottom: 12, color: '#1a1a2e' }}>Shaping the Future of Engineering in Kenya</h3>
+              <p style={{ color: '#444', lineHeight: 1.7, marginBottom: '1.5rem' }}>
+                The School of Engineering at Egerton University comprises four dynamic departments, offering programmes accredited by the Engineers Board of Kenya (EBK). Our graduates are leaders in infrastructure development, renewable energy, agricultural mechanization, and technology innovation across Africa.
+              </p>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.2rem' }} className="soe-depts">
+                <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
+                  <i className="fas fa-bolt" style={{ color: '#DAA520', marginTop: 4, fontSize: '1.1rem' }}></i>
+                  <div><strong style={{ display: 'block', marginBottom: 4 }}>Electrical &amp; Electronic Engineering</strong><span style={{ color: '#666', fontSize: '.9rem' }}>Power systems, electronics, telecommunications, and control engineering</span></div>
+                </div>
+                <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
+                  <i className="fas fa-hard-hat" style={{ color: '#DAA520', marginTop: 4, fontSize: '1.1rem' }}></i>
+                  <div><strong style={{ display: 'block', marginBottom: 4 }}>Civil &amp; Environmental Engineering</strong><span style={{ color: '#666', fontSize: '.9rem' }}>Structural, geotechnical, water resources, and environmental engineering</span></div>
+                </div>
+                <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
+                  <i className="fas fa-cogs" style={{ color: '#DAA520', marginTop: 4, fontSize: '1.1rem' }}></i>
+                  <div><strong style={{ display: 'block', marginBottom: 4 }}>Mechanical &amp; Manufacturing Engineering</strong><span style={{ color: '#666', fontSize: '.9rem' }}>Thermodynamics, mechanics, manufacturing, and industrial engineering</span></div>
+                </div>
+                <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
+                  <i className="fas fa-seedling" style={{ color: '#DAA520', marginTop: 4, fontSize: '1.1rem' }}></i>
+                  <div><strong style={{ display: 'block', marginBottom: 4 }}>Agricultural &amp; Biosystems Engineering</strong><span style={{ color: '#666', fontSize: '.9rem' }}>Farm mechanization, food processing, soil &amp; water conservation</span></div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right: Feature Cards */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }} className="soe-cards">
+              {[
+                { icon: 'fa-lightbulb', title: 'Innovation Hub', desc: 'Student-led maker spaces and innovation labs for prototyping solutions to real-world challenges.' },
+                { icon: 'fa-award', title: 'EBK Accredited', desc: 'All programmes accredited by the Engineers Board of Kenya for professional registration.' },
+                { icon: 'fa-handshake', title: 'Industry Links', desc: 'Partnerships with leading engineering firms, NGOs, and government agencies in Kenya and beyond.' },
+                { icon: 'fa-users', title: 'Vibrant Community', desc: 'A supportive network of students, alumni, and faculty dedicated to engineering excellence.' }
+              ].map(c => (
+                <div key={c.title} style={{ background: '#fff', borderRadius: 12, padding: '1.5rem 1.2rem', textAlign: 'center', borderTop: '3px solid #DAA520', boxShadow: '0 2px 12px rgba(0,0,0,0.06)' }}>
+                  <i className={`fas ${c.icon}`} style={{ fontSize: '1.6rem', color: '#800020', marginBottom: 12, display: 'block' }}></i>
+                  <h4 style={{ fontWeight: 700, marginBottom: 8, fontSize: '1rem', color: '#1a1a2e' }}>{c.title}</h4>
+                  <p style={{ color: '#666', fontSize: '.85rem', lineHeight: 1.5, margin: 0 }}>{c.desc}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
