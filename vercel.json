@@ -2,7 +2,7 @@
   "version": 2,
   "framework": null,
   "installCommand": "npm install --include=dev",
-  "buildCommand": "npm run build",
+  "buildCommand": "npm run build && echo '=== BUILD OUTPUT ===' && ls -la dist/ && ls -la dist/assets/ 2>/dev/null || echo 'No dist/assets'",
   "outputDirectory": "dist",
   "rewrites": [
     {
