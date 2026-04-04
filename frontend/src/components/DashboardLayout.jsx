@@ -49,6 +49,7 @@ export default function DashboardLayout() {
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('eesa-dark') === '1');
   const [notifs, setNotifs] = useState([]);
   const [notifOpen, setNotifOpen] = useState(false);
+  const canUseNotifications = ['member', 'admin', 'lecturer'].includes(role);
 
   /* dark mode */
   useEffect(() => {
@@ -58,12 +59,12 @@ export default function DashboardLayout() {
 
   /* notifications */
   useEffect(() => {
-    if (role !== 'member') return;
+    if (!canUseNotifications) return;
     const load = () => fetch('/api/notifications').then(r => r.ok ? r.json() : { notifications: [] }).then(d => setNotifs(Array.isArray(d) ? d : Array.isArray(d.notifications) ? d.notifications : [])).catch(() => {});
     load();
     const iv = setInterval(load, 60000);
     return () => clearInterval(iv);
-  }, [role]);
+  }, [canUseNotifications]);
 
   const unreadCount = notifs.filter(n => !n.read).length;
   const nav = NAV_MAP[role] || [];
@@ -137,7 +138,7 @@ export default function DashboardLayout() {
           </button>
           <h2 className="page-title">{pageTitle}</h2>
           <div className="topbar-actions">
-            {role === 'member' && (
+            {canUseNotifications && (
               <div className="notification-bell" onClick={() => setNotifOpen(o => !o)} style={{ position: 'relative' }}>
                 <i className="fas fa-bell"></i>
                 {unreadCount > 0 && <span className="notif-badge">{unreadCount}</span>}
@@ -148,7 +149,7 @@ export default function DashboardLayout() {
             </button>
             <span className="topbar-greeting">Welcome, {userName.split(' ')[0]}!</span>
           </div>
-          {notifOpen && role === 'member' && (
+          {notifOpen && canUseNotifications && (
             <div className="notification-dropdown" style={{ display: 'block' }}>
               <div className="notif-header">
                 <h4>Notifications</h4>

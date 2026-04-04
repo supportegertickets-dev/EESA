@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Gallery = require('../models/Gallery');
+const Admin = require('../models/Admin');
+const Notification = require('../models/Notification');
 const { requireAdmin } = require('../middleware/auth');
 const { uploadImage, uploadToCloudinary, deleteFromCloudinary } = require('../middleware/upload');
 
@@ -45,9 +47,32 @@ router.post('/', requireAdmin, uploadImage.array('images', 10), async (req, res)
         imageUrl: result.url,
         publicId: result.publicId,
         category: safeCategory,
-        uploadedBy: req.session.userId
+        uploadedBy: req.session.admin?.id
       });
       saved.push(photo);
+    }
+
+    try {
+      const admins = await Admin.find({}).select('_id').lean();
+      if (admins.length > 0) {
+        const actor = req.session.admin?.fullName || req.session.admin?.username || 'An admin';
+        const notifications = admins.map((admin) => ({
+          recipient: admin._id,
+          recipientModel: 'Admin',
+          type: 'system',
+          title: saved.length === 1 ? 'Gallery image uploaded' : 'Gallery images uploaded',
+          message: `${actor} uploaded ${saved.length} image${saved.length === 1 ? '' : 's'} to the ${safeCategory} gallery.`,
+          link: '/admin/gallery',
+          data: {
+            category: safeCategory,
+            count: saved.length,
+            photoIds: saved.map((photo) => String(photo._id))
+          }
+        }));
+        await Notification.insertMany(notifications);
+      }
+    } catch (notificationError) {
+      console.error('Gallery notification error:', notificationError.message);
     }
 
     res.status(201).json({ message: `${saved.length} photo(s) uploaded`, photos: saved });
