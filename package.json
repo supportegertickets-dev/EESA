@@ -8,7 +8,7 @@
     "build": "npm run client:build",
     "dev": "concurrently \"node backend/server.js\" \"vite --config frontend/vite.config.js\"",
     "client:dev": "vite --config frontend/vite.config.js",
-    "client:build": "vite build --config frontend/vite.config.js",
+    "client:build": "vite build --config frontend/vite.config.js && node scripts/prepare-vercel-output.cjs",
     "seed": "node backend/seed.js"
   },
   "dependencies": {
