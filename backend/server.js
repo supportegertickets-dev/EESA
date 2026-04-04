@@ -112,10 +112,18 @@ app.get('/legacy/lecturer*', (req, res) => res.sendFile(path.join(publicPath, 'l
 app.get('/legacy/portal*', (req, res) => res.sendFile(path.join(publicPath, 'portal.html')));
 
 // React app routes (fallback to legacy HTML if the React build is not available yet)
-app.get('/dashboard*', (req, res) => res.sendFile(hasReactBuild ? reactIndexPath : path.join(publicPath, 'dashboard.html')));
-app.get('/admin*', (req, res) => res.sendFile(hasReactBuild ? reactIndexPath : path.join(publicPath, 'admin.html')));
-app.get('/lecturer*', (req, res) => res.sendFile(hasReactBuild ? reactIndexPath : path.join(publicPath, 'lecturer.html')));
-app.get('/portal*', (req, res) => res.sendFile(hasReactBuild ? reactIndexPath : path.join(publicPath, 'portal.html')));
-app.get('*', (req, res) => res.sendFile(hasReactBuild ? reactIndexPath : path.join(publicPath, 'index.html')));
+if (hasReactBuild) {
+  app.get('/dashboard*', (req, res) => res.sendFile(reactIndexPath));
+  app.get('/admin*', (req, res) => res.sendFile(reactIndexPath));
+  app.get('/lecturer*', (req, res) => res.sendFile(reactIndexPath));
+  app.get('/portal*', (req, res) => res.sendFile(reactIndexPath));
+  app.get('*', (req, res) => {
+    if (req.accepts('html')) return res.sendFile(reactIndexPath);
+    res.status(404).json({ error: 'Not found' });
+  });
+} else {
+  // No React build on this server — frontend is served by Vercel
+  app.get('*', (req, res) => res.status(404).json({ error: 'Not found' }));
+}
 
 app.listen(PORT, () => console.log(`EESA Portal running at http://localhost:${PORT}`));
