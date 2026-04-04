@@ -1,7 +1,7 @@
 {
   "version": 2,
   "buildCommand": "VITE_API_BASE_URL=https://eesa-5t9h.onrender.com npm run client:build",
-  "outputDirectory": "dist",
+  "outputDirectory": "frontend/dist",
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ]
