@@ -2,7 +2,7 @@
   "version": 2,
   "framework": null,
   "installCommand": "npm install --include=dev",
-  "buildCommand": "npm run build && rm -rf dist && mv frontend/dist dist",
+  "buildCommand": "npm run build && echo '---DEBUG---' && pwd && ls -la dist/ 2>&1 || true && ls -la frontend/dist/ 2>&1 || true",
   "outputDirectory": "dist",
   "rewrites": [
     {
