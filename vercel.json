@@ -2,11 +2,11 @@
   "version": 2,
   "framework": null,
   "installCommand": "npm install --include=dev",
-  "buildCommand": "npm run build && echo '---DEBUG---' && pwd && ls -la dist/ 2>&1 || true && ls -la frontend/dist/ 2>&1 || true",
-  "outputDirectory": "dist",
+  "buildCommand": "npm run build",
+  "outputDirectory": "frontend/dist",
   "rewrites": [
     {
-      "source": "/((?!assets/|css/|images/|favicon.ico|manifest.json|service-worker.js).*)",
+      "source": "/(.*)",
       "destination": "/index.html"
     }
   ]
