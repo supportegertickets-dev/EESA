@@ -42,7 +42,7 @@ export default function AdminDashboard() {
           <h4 style={{ marginBottom: 10 }}>Members by Department</h4>
           {Object.entries(stats.departmentBreakdown).map(([dept, count]) => (
             <div key={dept} style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 }}>
-              <span style={{ minWidth: 180 }}>{dept}</span>
+              <span style={{ minWidth: 100, maxWidth: 180, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: '.88rem' }}>{dept}</span>
               <div style={{ flex: 1, background: 'var(--gray-200)', borderRadius: 4, height: 20, overflow: 'hidden' }}>
                 <div style={{ width: `${Math.min((count / (stats.totalMembers || 1)) * 100, 100)}%`, background: 'var(--primary)', height: '100%', borderRadius: 4 }}></div>
               </div>

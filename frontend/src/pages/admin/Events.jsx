@@ -156,7 +156,7 @@ export default function Events() {
       {showForm && (
         <form className="form-card" onSubmit={save} style={{ marginBottom: 20 }}>
           <h4 style={{ marginBottom: 12 }}>{editId ? 'Edit Event' : 'Create New Event'}</h4>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 12 }}>
             <div className="form-group" style={{ gridColumn: '1 / -1' }}>
               <label>Title *</label>
               <input value={form.title} onChange={e => set('title', e.target.value)} required placeholder="e.g. Annual Engineering Workshop 2026" />
@@ -212,18 +212,18 @@ export default function Events() {
 
       {/* Filters */}
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginBottom: 20, alignItems: 'center' }}>
-        <select style={{ padding: '8px 12px', border: '2px solid var(--gray-300)', borderRadius: 'var(--radius-sm)' }} value={filterStatus} onChange={e => setFilterStatus(e.target.value)}>
+        <select style={{ padding: '8px 12px', border: '2px solid var(--gray-300)', borderRadius: 'var(--radius-sm)', minWidth: 0, flex: '1 1 130px', maxWidth: 180 }} value={filterStatus} onChange={e => setFilterStatus(e.target.value)}>
           <option value="">All Status</option>
           <option value="upcoming">Upcoming</option>
           <option value="ongoing">Ongoing</option>
           <option value="completed">Completed</option>
           <option value="cancelled">Cancelled</option>
         </select>
-        <select style={{ padding: '8px 12px', border: '2px solid var(--gray-300)', borderRadius: 'var(--radius-sm)' }} value={filterCat} onChange={e => setFilterCat(e.target.value)}>
+        <select style={{ padding: '8px 12px', border: '2px solid var(--gray-300)', borderRadius: 'var(--radius-sm)', minWidth: 0, flex: '1 1 130px', maxWidth: 180 }} value={filterCat} onChange={e => setFilterCat(e.target.value)}>
           <option value="">All Categories</option>
           {CATEGORIES.map(c => <option key={c.value} value={c.value}>{c.label}</option>)}
         </select>
-        <input style={{ padding: '8px 12px', border: '2px solid var(--gray-300)', borderRadius: 'var(--radius-sm)', flex: 1, minWidth: 180 }} placeholder="Search events..." value={search} onChange={e => setSearch(e.target.value)} />
+        <input style={{ padding: '8px 12px', border: '2px solid var(--gray-300)', borderRadius: 'var(--radius-sm)', flex: '1 1 150px', minWidth: 0 }} placeholder="Search events..." value={search} onChange={e => setSearch(e.target.value)} />
       </div>
 
       {/* Events Table */}
@@ -270,7 +270,7 @@ export default function Events() {
                     </td>
                     <td><Badge type={statusColor(ev.status)}>{ev.status}</Badge></td>
                     <td>
-                      <div style={{ display: 'flex', gap: 4 }}>
+                      <div style={{ display: 'flex', gap: 4, whiteSpace: 'nowrap' }}>
                         <button className="btn btn-ghost btn-sm" title="View" onClick={() => openDetail(ev)}><i className="fas fa-eye"></i></button>
                         <button className="btn btn-ghost btn-sm" title="Edit" onClick={() => edit(ev)}><i className="fas fa-edit"></i></button>
                         <button className="btn btn-ghost btn-sm" title="Delete" style={{ color: 'var(--danger)' }} onClick={() => del(ev._id)}><i className="fas fa-trash"></i></button>
@@ -290,8 +290,8 @@ export default function Events() {
           <div>
             {/* Banner */}
             {detail.imageUrl && (
-              <div style={{ marginBottom: 16, borderRadius: 'var(--radius)', overflow: 'hidden', maxHeight: 220 }}>
-                <img src={detail.imageUrl} alt={detail.title} style={{ width: '100%', height: 220, objectFit: 'cover' }} />
+              <div style={{ marginBottom: 16, borderRadius: 'var(--radius)', overflow: 'hidden', maxHeight: 180 }}>
+                <img src={detail.imageUrl} alt={detail.title} style={{ width: '100%', maxHeight: 180, objectFit: 'cover' }} />
               </div>
             )}
 
@@ -310,14 +310,14 @@ export default function Events() {
             </div>
 
             {/* Info Grid */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 16, fontSize: '.9rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 12, marginBottom: 16, fontSize: '.9rem' }}>
               <div className="form-card" style={{ padding: 12, marginBottom: 0, background: 'var(--gray-50, #f9fafb)' }}>
                 <div style={{ color: 'var(--gray-500)', fontSize: '.76rem', marginBottom: 2 }}>Start Date</div>
-                <div style={{ fontWeight: 600 }}><i className="fas fa-calendar-alt" style={{ marginRight: 6, color: 'var(--primary)' }}></i>{detail.date ? new Date(detail.date).toLocaleString('en-KE', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : 'TBA'}</div>
+                <div style={{ fontWeight: 600, wordBreak: 'break-word' }}><i className="fas fa-calendar-alt" style={{ marginRight: 6, color: 'var(--primary)' }}></i>{detail.date ? new Date(detail.date).toLocaleString('en-KE', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : 'TBA'}</div>
               </div>
               <div className="form-card" style={{ padding: 12, marginBottom: 0, background: 'var(--gray-50, #f9fafb)' }}>
                 <div style={{ color: 'var(--gray-500)', fontSize: '.76rem', marginBottom: 2 }}>End Date</div>
-                <div style={{ fontWeight: 600 }}><i className="fas fa-calendar-check" style={{ marginRight: 6, color: 'var(--success)' }}></i>{detail.endDate ? new Date(detail.endDate).toLocaleString('en-KE', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '--'}</div>
+                <div style={{ fontWeight: 600, wordBreak: 'break-word' }}><i className="fas fa-calendar-check" style={{ marginRight: 6, color: 'var(--success)' }}></i>{detail.endDate ? new Date(detail.endDate).toLocaleString('en-KE', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '--'}</div>
               </div>
               <div className="form-card" style={{ padding: 12, marginBottom: 0, background: 'var(--gray-50, #f9fafb)' }}>
                 <div style={{ color: 'var(--gray-500)', fontSize: '.76rem', marginBottom: 2 }}>Location</div>

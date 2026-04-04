@@ -82,12 +82,37 @@ export default function DashboardLayout() {
     setNotifs(ns => ns.map(n => ({ ...n, read: true })));
   };
 
+  /* Close notification dropdown when clicking outside */
+  useEffect(() => {
+    if (!notifOpen) return;
+    const handler = (e) => {
+      if (!e.target.closest('.notification-bell') && !e.target.closest('.notification-dropdown')) {
+        setNotifOpen(false);
+      }
+    };
+    document.addEventListener('click', handler);
+    return () => document.removeEventListener('click', handler);
+  }, [notifOpen]);
+
   const userName = user?.fullName || user?.username || user?.name || 'User';
   const userStatus = user?.status || user?.role || user?.tier || 'Active';
   const statusClass = userStatus === 'active' || userStatus === 'Active' ? 'success' : userStatus === 'admin' ? 'admin' : 'warning';
 
+  /* Lock body scroll when mobile sidebar is open */
+  useEffect(() => {
+    if (sidebarOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [sidebarOpen]);
+
   return (
     <div className="portal-page">
+      {/* Sidebar backdrop (mobile) */}
+      {sidebarOpen && <div className="sidebar-backdrop" onClick={() => setSidebarOpen(false)} />}
+
       {/* Sidebar */}
       <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
         <div className="sidebar-header">
@@ -171,7 +196,7 @@ export default function DashboardLayout() {
             </div>
           )}
         </header>
-        <div className="section-container" style={{ padding: '20px' }}>
+        <div className="section-container" style={{ padding: '16px 12px' }}>
           <Outlet />
         </div>
       </main>

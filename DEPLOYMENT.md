@@ -5,8 +5,9 @@
 - Root directory: repository root
 - Build command: `npm run build`
 - Output directory: `frontend/dist`
-- Environment variable:
-  - `VITE_API_BASE_URL=https://your-render-service.onrender.com`
+- **Do NOT set** `VITE_API_BASE_URL` in Vercel environment variables.
+  API requests are proxied through Vercel rewrites (see `vercel.json`) so
+  cookies stay first-party and work on all mobile browsers.
 
 ## 2. Backend: Render
 Use the included `render.yaml` or create a Web Service with:
@@ -38,7 +39,8 @@ Required Render environment variables:
 In Brevo, create an SMTP key and use it as `SMTP_PASS`.
 
 ## 4. Important behavior already configured
-- Frontend requests now use `VITE_API_BASE_URL`
+- API requests are proxied through Vercel rewrites (`/api/*` → Render)
+  so session cookies are first-party — no third-party cookie issues on mobile
 - Browser sessions are sent with `credentials: include`
 - Backend CORS accepts `FRONTEND_URL`
 - Production cookies use `SameSite=None` and `Secure`

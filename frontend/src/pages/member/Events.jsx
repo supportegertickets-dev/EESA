@@ -103,15 +103,15 @@ export default function Events() {
 
       {/* Category pills + Search */}
       <div style={{ display: 'flex', gap: 10, marginBottom: 20, flexWrap: 'wrap', alignItems: 'center' }}>
-        <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', flex: 1, minWidth: 200 }}>
+        <div style={{ display: 'flex', gap: 6, overflowX: 'auto', WebkitOverflowScrolling: 'touch', paddingBottom: 4, flex: '1 1 100%' }}>
           {CATEGORIES.map(c => (
             <button key={c.value} className={`btn ${catFilter === c.value ? 'btn-primary' : 'btn-ghost'} btn-sm`}
-              style={{ fontSize: '.78rem' }} onClick={() => setCatFilter(c.value)}>
+              style={{ fontSize: '.78rem', whiteSpace: 'nowrap', flexShrink: 0 }} onClick={() => setCatFilter(c.value)}>
               <i className={`fas ${c.icon}`} style={{ marginRight: 4 }}></i>{c.label}
             </button>
           ))}
         </div>
-        <input style={{ padding: '8px 12px', border: '2px solid var(--gray-300)', borderRadius: 'var(--radius-sm)', minWidth: 180 }}
+        <input style={{ padding: '8px 12px', border: '2px solid var(--gray-300)', borderRadius: 'var(--radius-sm)', flex: '1 1 150px', minWidth: 0 }}
           placeholder="Search events..." value={search} onChange={e => setSearch(e.target.value)} />
       </div>
 
@@ -174,8 +174,8 @@ export default function Events() {
           <div>
             {/* Banner */}
             {selected.imageUrl && (
-              <div style={{ marginBottom: 16, borderRadius: 'var(--radius)', overflow: 'hidden', maxHeight: 220 }}>
-                <img src={selected.imageUrl} alt={selected.title} style={{ width: '100%', height: 220, objectFit: 'cover' }} />
+              <div style={{ marginBottom: 16, borderRadius: 'var(--radius)', overflow: 'hidden', maxHeight: 180 }}>
+                <img src={selected.imageUrl} alt={selected.title} style={{ width: '100%', maxHeight: 180, objectFit: 'cover' }} />
               </div>
             )}
 
@@ -204,14 +204,14 @@ export default function Events() {
             </div>
 
             {/* Info Grid */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 16, fontSize: '.9rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 12, marginBottom: 16, fontSize: '.9rem' }}>
               <div className="form-card" style={{ padding: 12, marginBottom: 0, background: 'var(--gray-50, #f9fafb)' }}>
                 <div style={{ color: 'var(--gray-500)', fontSize: '.76rem', marginBottom: 2 }}>Start Date</div>
-                <div style={{ fontWeight: 600 }}><i className="fas fa-calendar-alt" style={{ marginRight: 6, color: 'var(--primary)' }}></i>{selected.date ? new Date(selected.date).toLocaleString('en-KE', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : 'TBA'}</div>
+                <div style={{ fontWeight: 600, wordBreak: 'break-word' }}><i className="fas fa-calendar-alt" style={{ marginRight: 6, color: 'var(--primary)' }}></i>{selected.date ? new Date(selected.date).toLocaleString('en-KE', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : 'TBA'}</div>
               </div>
               <div className="form-card" style={{ padding: 12, marginBottom: 0, background: 'var(--gray-50, #f9fafb)' }}>
                 <div style={{ color: 'var(--gray-500)', fontSize: '.76rem', marginBottom: 2 }}>End Date</div>
-                <div style={{ fontWeight: 600 }}><i className="fas fa-calendar-check" style={{ marginRight: 6, color: 'var(--success)' }}></i>{selected.endDate ? new Date(selected.endDate).toLocaleString('en-KE', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '--'}</div>
+                <div style={{ fontWeight: 600, wordBreak: 'break-word' }}><i className="fas fa-calendar-check" style={{ marginRight: 6, color: 'var(--success)' }}></i>{selected.endDate ? new Date(selected.endDate).toLocaleString('en-KE', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '--'}</div>
               </div>
               <div className="form-card" style={{ padding: 12, marginBottom: 0, background: 'var(--gray-50, #f9fafb)' }}>
                 <div style={{ color: 'var(--gray-500)', fontSize: '.76rem', marginBottom: 2 }}>Location</div>
