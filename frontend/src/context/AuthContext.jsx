@@ -14,17 +14,25 @@ export function AuthProvider({ children }) {
   const [role, setRole] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const safeJson = async (res) => {
+    const text = await res.text();
+    if (!text) return null;
+    try { return JSON.parse(text); } catch { return null; }
+  };
+
   const checkSession = useCallback(async () => {
     for (const [r, cfg] of Object.entries(ROLE_CONFIG)) {
       try {
         const res = await fetch(cfg.checkUrl);
         if (res.ok) {
-          const data = await res.json();
-          const u = data.member || data.admin || data.lecturer || data.sponsor || data;
-          setUser(u);
-          setRole(r);
-          setLoading(false);
-          return;
+          const data = await safeJson(res);
+          if (data) {
+            const u = data.member || data.admin || data.lecturer || data.sponsor || data;
+            setUser(u);
+            setRole(r);
+            setLoading(false);
+            return;
+          }
         }
       } catch { /* next role */ }
     }
@@ -41,8 +49,9 @@ export function AuthProvider({ children }) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(credentials)
     });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error || 'Login failed');
+    const data = await safeJson(res);
+    if (!res.ok) throw new Error((data && data.error) || 'Login failed');
+    if (!data) throw new Error('Server returned an empty response — please try again');
     // Detect actual role from response (admin may log in via member endpoint)
     const actualRole = data.admin ? 'admin' : data.lecturer ? 'lecturer' : data.sponsor ? 'sponsor' : r;
     const u = data.member || data.admin || data.lecturer || data.sponsor || data;
