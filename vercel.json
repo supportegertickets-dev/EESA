@@ -1,10 +1,8 @@
 {
   "version": 2,
-  "installCommand": "true",
-  "buildCommand": "true",
+  "buildCommand": "VITE_API_BASE_URL=https://eesa-5t9h.onrender.com npm run client:build",
   "outputDirectory": "dist",
-  "routes": [
-    { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "/index.html" }
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
