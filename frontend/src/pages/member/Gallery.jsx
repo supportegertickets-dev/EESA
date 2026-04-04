@@ -9,11 +9,24 @@ export default function MemberGallery() {
   const [filter, setFilter] = useState('');
   const [lightbox, setLightbox] = useState(null);
 
-  const load = () => {
-    const q = filter ? `?category=${filter}` : '';
-    fetch(`/api/gallery${q}`).then(r => r.ok ? r.json() : { photos: [] }).then(d => setPhotos(d.photos || [])).catch(() => {}).finally(() => setLoading(false));
+  const load = async () => {
+    setLoading(true);
+    const params = new URLSearchParams();
+    if (filter) params.set('category', filter);
+    params.set('_ts', Date.now().toString());
+    const q = `?${params.toString()}`;
+
+    try {
+      const res = await fetch(`/api/gallery${q}`, { cache: 'no-store' });
+      const data = res.ok ? await res.json() : { photos: [] };
+      setPhotos(data.photos || []);
+    } catch {
+      setPhotos([]);
+    } finally {
+      setLoading(false);
+    }
   };
-  useEffect(load, [filter]);
+  useEffect(() => { load(); }, [filter]);
 
   if (loading) return <Loading />;
 

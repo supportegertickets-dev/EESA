@@ -16,11 +16,24 @@ export default function AdminGallery() {
   const [filter, setFilter] = useState('');
   const [lightbox, setLightbox] = useState(null);
 
-  const load = () => {
-    const q = filter ? `?category=${filter}` : '';
-    fetch(`/api/gallery${q}`).then(r => r.ok ? r.json() : { photos: [] }).then(d => setPhotos(d.photos || [])).catch(() => {}).finally(() => setLoading(false));
+  const load = async () => {
+    setLoading(true);
+    const params = new URLSearchParams();
+    if (filter) params.set('category', filter);
+    params.set('_ts', Date.now().toString());
+    const q = `?${params.toString()}`;
+
+    try {
+      const res = await fetch(`/api/gallery${q}`, { cache: 'no-store' });
+      const data = res.ok ? await res.json() : { photos: [] };
+      setPhotos(data.photos || []);
+    } catch {
+      setPhotos([]);
+    } finally {
+      setLoading(false);
+    }
   };
-  useEffect(load, [filter]);
+  useEffect(() => { load(); }, [filter]);
 
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
 
@@ -55,12 +68,19 @@ export default function AdminGallery() {
 
   const remove = async (id) => {
     if (!window.confirm('Delete this photo?')) return;
+
+    const previousPhotos = photos;
+    setPhotos(prev => prev.filter(photo => photo._id !== id));
+    if (lightbox?._id === id) setLightbox(null);
+
     try {
       const res = await fetch(`/api/gallery/${id}`, { method: 'DELETE' });
-      if (!res.ok) throw new Error((await res.json()).error);
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || 'Failed to delete photo');
       toast.success('Photo deleted');
       load();
     } catch (err) {
+      setPhotos(previousPhotos);
       toast.error(err.message);
     }
   };
